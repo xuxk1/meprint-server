@@ -1,0 +1,88 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "me.xiaokui.config.FileProperties",
+      "sourceType": "me.xiaokui.config.FileProperties"
+    },
+    {
+      "name": "file.linux",
+      "type": "me.xiaokui.config.FileProperties$ElPath",
+      "sourceType": "me.xiaokui.config.FileProperties",
+      "sourceMethod": "getLinux()"
+    },
+    {
+      "name": "file.mac",
+      "type": "me.xiaokui.config.FileProperties$ElPath",
+      "sourceType": "me.xiaokui.config.FileProperties",
+      "sourceMethod": "getMac()"
+    },
+    {
+      "name": "file.path",
+      "type": "me.xiaokui.config.FileProperties$ElPath",
+      "sourceType": "me.xiaokui.config.FileProperties",
+      "sourceMethod": "getPath()"
+    },
+    {
+      "name": "file.windows",
+      "type": "me.xiaokui.config.FileProperties$ElPath",
+      "sourceType": "me.xiaokui.config.FileProperties",
+      "sourceMethod": "getWindows()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.avatar-max-size",
+      "type": "java.lang.Long",
+      "description": "头像大小限制",
+      "sourceType": "me.xiaokui.config.FileProperties"
+    },
+    {
+      "name": "file.linux.avatar",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.linux.path",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.mac.avatar",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.mac.path",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.max-size",
+      "type": "java.lang.Long",
+      "description": "文件大小限制",
+      "sourceType": "me.xiaokui.config.FileProperties"
+    },
+    {
+      "name": "file.path.avatar",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.path.path",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.windows.avatar",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    },
+    {
+      "name": "file.windows.path",
+      "type": "java.lang.String",
+      "sourceType": "me.xiaokui.config.FileProperties$ElPath"
+    }
+  ],
+  "hints": []
+}
