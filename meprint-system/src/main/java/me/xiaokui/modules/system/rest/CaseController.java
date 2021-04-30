@@ -8,6 +8,7 @@ import me.xiaokui.exception.BadRequestException;
 import me.xiaokui.modules.mapper.BizMapper;
 import me.xiaokui.modules.system.domain.request.cases.*;
 import me.xiaokui.modules.system.domain.request.ws.WsSaveReq;
+import me.xiaokui.modules.system.domain.response.controller.Response;
 import me.xiaokui.modules.system.service.CaseService;
 import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.mapper.BizMapper;
@@ -61,17 +62,10 @@ public class CaseController {
      * @return 分页接口
      */
     @GetMapping(value = "/list")
-    public ResponseEntity<Object> getCaseList(@RequestParam @NotNull(message = "渠道为空")  Integer channel,
-                                   @RequestParam @NotNull(message = "业务线id为空")  Long productLineId,
-                                   @RequestParam @NotNull(message = "文件夹未选中")  String bizId,
-                                   @RequestParam(required = false)  Long projectId,
-                                   @RequestParam(required = false)  String title,
-                                   @RequestParam(required = false)  String creator,
-                                   @RequestParam(required = false)  String requirementId,
-                                   @RequestParam(required = false)  String beginTime,
-                                   @RequestParam(required = false)  String endTime,
-                                   @RequestParam(defaultValue = "1") Integer page,
-                                   @RequestParam(defaultValue = "1000") Integer size) {
+    public ResponseEntity<Object> getCaseList(@RequestParam Integer channel, Long productLineId, String bizId,
+                                              Long projectId, String title, String creator, String requirementId, String beginTime, String endTime,
+                                              @RequestParam(defaultValue = "1") Integer page,
+                                              @RequestParam(defaultValue = "10") Integer size) {
         try {
             CaseQueryReq caseQueryReq = new CaseQueryReq(0, title, creator, requirementId, beginTime,
                     endTime, channel, bizId, productLineId, page, size, projectId);
@@ -218,8 +212,9 @@ public class CaseController {
      * @return 概览信息
      */
     @GetMapping(value = "/getCaseInfo")
-    public ResponseEntity<Object> getCaseGeneralInfo(@RequestParam @NotNull(message = "用例id为空") Long id) {
-        return new ResponseEntity<>(caseService.getCaseGeneralInfo(id), HttpStatus.OK);
+    public Response<?> getCaseGeneralInfo(@RequestParam @NotNull(message = "用例id为空") Long id) {
+//        return new ResponseEntity<>(caseService.getCaseGeneralInfo(id), HttpStatus.OK);
+        return Response.success(caseService.getCaseGeneralInfo(id));
     }
 
     /**

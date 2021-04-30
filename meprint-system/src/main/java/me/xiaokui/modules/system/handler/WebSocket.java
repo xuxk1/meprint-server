@@ -4,9 +4,6 @@ package me.xiaokui.modules.system.handler;
 import me.xiaokui.modules.util.BitBaseUtil;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
-import me.xiaokui.modules.util.enums.StatusCode;
-import me.xiaokui.modules.util.exception.CaseServerException;
-import me.xiaokui.modules.util.BitBaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020/9/23
  */
 @Component
-@ServerEndpoint(value = "/api/case/{caseId}/{recordId}/{isCore}/{user}")
+@ServerEndpoint(value = "/api/case/{caseId}/{recordId}/{isCore}/{user}/{token}")
 public class WebSocket {
 
     /**
@@ -34,13 +31,6 @@ public class WebSocket {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocket.class);
 
-//    /**
-//     * 依赖
-//     * @see ApplicationConfig#setWebsocketService(RecordService, TestCaseMapper)
-//     */
-//    public static RecordService recordService;
-//    public static TestCaseMapper caseMapper;
-//
     /**
      * 每个websocket所持有的基本信息
      */

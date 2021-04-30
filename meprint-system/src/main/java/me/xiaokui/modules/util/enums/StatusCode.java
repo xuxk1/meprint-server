@@ -28,7 +28,7 @@ public enum StatusCode implements Status {
     NOT_FOUND_ENTITY(10600, "没有该项数据"),
 
     // 统一异常
-    SERVER_BUSY_ERROR(666666, "服务器正忙，请稍后再试66666666");
+    SERVER_BUSY_ERROR(999999, "服务器正忙，请稍后再试");
 
     private int status;
     private String msg;

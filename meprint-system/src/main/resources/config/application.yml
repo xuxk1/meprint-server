@@ -2,6 +2,8 @@ server:
   port: 8098
   servlet:
     context-path: /
+http:
+  port: 8066
 
 management:
   security:

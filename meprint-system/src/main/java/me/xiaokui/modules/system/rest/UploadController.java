@@ -12,6 +12,7 @@ import me.xiaokui.modules.system.service.FileService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +36,7 @@ public class UploadController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
 
+    @Autowired
     FileService fileService;
 
     /**
@@ -51,8 +53,8 @@ public class UploadController {
      */
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Response<Long> importXmind(@RequestParam MultipartFile file, String creator, String bizId,
-                                      Long productLineId, String title, String description, Integer channel, String requirementId) {
-        FileImportReq req = new FileImportReq(file, creator, productLineId, title, description, channel, requirementId, bizId);
+                                      Long productLineId, String title, String description, Long projectId, Integer caseType, Integer channel, String requirementId) {
+        FileImportReq req = new FileImportReq(file, creator, productLineId, title, description, projectId, caseType, channel, requirementId, bizId);
         req.validate();
         try {
             return Response.success(fileService.importXmindFile(req));

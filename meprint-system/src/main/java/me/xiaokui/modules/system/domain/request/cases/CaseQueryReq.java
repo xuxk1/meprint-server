@@ -1,6 +1,8 @@
 package me.xiaokui.modules.system.domain.request.cases;
 
 import lombok.Data;
+import me.xiaokui.modules.system.domain.request.ParamValidate;
+import org.springframework.util.StringUtils;
 
 /**
  * 用例 筛选与查询
@@ -9,7 +11,7 @@ import lombok.Data;
  * @date 2020/8/12
  */
 @Data
-public class CaseQueryReq {
+public class CaseQueryReq implements ParamValidate {
 
     private Long id;
 
@@ -50,5 +52,32 @@ public class CaseQueryReq {
         this.projectId = projectId;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public void validate() {
+
+        if (channel == null || channel < 0) {
+            throw new IllegalArgumentException("渠道为空或者非法");
+        }
+        if (lineId == null || lineId < 0L) {
+            throw new IllegalArgumentException("业务线id为空或者非法");
+        }
+        if (StringUtils.isEmpty(bizId)) {
+            // 特殊点，没有传bizId就给-1，而不是报错
+            throw new IllegalArgumentException("文件夹id");
+        }
+        if (caseType == null || caseType < 0) {
+            throw new IllegalArgumentException("用例类型为空或者非法");
+        }
+        if (StringUtils.isEmpty(title)) {
+            throw new IllegalArgumentException("标题为空");
+        }
+        if (StringUtils.isEmpty(creator)) {
+            throw new IllegalArgumentException("创建人为空");
+        }
+        if (projectId == null || projectId < 0L) {
+            throw new IllegalArgumentException("项目id为空或者非法");
+        }
     }
 }

@@ -31,6 +31,7 @@ import org.dom4j.Element;
 import org.dom4j.io.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -52,11 +53,13 @@ import static me.xiaokui.constants.XmindConstant.*;
 @Service
 public class FileServiceImpl implements FileService {
 
+    @Autowired
     private CaseService caseService;
 
+    @Autowired
     private TestCaseMapper caseMapper;
 
-    private static final Logger log = LoggerFactory.getLogger(FileServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -330,13 +333,13 @@ public class FileServiceImpl implements FileService {
         }else {
             testCase.setRequirementId(request.getRequirementId());
         }
-        testCase.setProductLineId(request.getProductLineId());
         testCase.setDescription(request.getDescription());
         testCase.setTitle(request.getTitle());
-        testCase.setCaseType(0);
+        testCase.setCaseType(request.getCaseType());
         testCase.setCaseContent(caseObj.toJSONString());
         testCase.setChannel(request.getChannel());
         testCase.setBizId(request.getBizId());
+        testCase.setProjectId(request.getProjectId());
         return testCase;
     }
 }

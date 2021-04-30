@@ -16,6 +16,7 @@
 package me.xiaokui.modules.security.security;
 
 import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import io.jsonwebtoken.ExpiredJwtException;
 import me.xiaokui.modules.security.config.bean.SecurityProperties;
 import me.xiaokui.modules.security.service.OnlineUserService;
@@ -38,6 +39,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -100,8 +103,17 @@ public class TokenFilter extends GenericFilterBean {
      * @param request /
      * @return /
      */
-    private String resolveToken(HttpServletRequest request) {
+    private String resolveToken(HttpServletRequest request) throws UnsupportedEncodingException {
         String bearerToken = request.getHeader(properties.getHeader());
+        if (Strings.isNullOrEmpty(bearerToken)){
+            if (Strings.nullToEmpty(request.getHeader("Upgrade")).equalsIgnoreCase("websocket")){
+//                bearerToken = request.getParameter("token");
+                String[] str = request.getServletPath().split("/");
+                bearerToken = str[str.length-1];
+                log.info("bearerToken======" + bearerToken);
+            }
+
+        }
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(properties.getTokenStartWith())) {
             // 去掉令牌前缀
             return bearerToken.replace(properties.getTokenStartWith(), "");

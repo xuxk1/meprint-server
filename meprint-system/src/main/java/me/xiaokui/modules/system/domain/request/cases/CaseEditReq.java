@@ -58,6 +58,11 @@ public class CaseEditReq implements ParamValidate {
      */
     private String description;
 
+    /**
+     * 非必填 用例id
+     */
+    private Long projectId;
+
 
 
     @Override
@@ -92,6 +97,9 @@ public class CaseEditReq implements ParamValidate {
         }
         if (description == null) {
             description = SystemConstant.EMPTY_STR;
+        }
+        if (projectId == null || projectId <= 0) {
+            throw new IllegalArgumentException("要修改的项目ID为空或者非法");
         }
     }
 }

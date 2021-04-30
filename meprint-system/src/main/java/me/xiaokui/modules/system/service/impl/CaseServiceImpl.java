@@ -152,7 +152,12 @@ public class CaseServiceImpl implements CaseService {
         BeanUtils.copyProperties(request, testCase);
         testCase.setGmtModified(new Date());
 
-        DirNodeDto tree = dirService.getDirTree(testCase.getProductLineId(), testCase.getChannel());
+        DirNodeDto tree = new DirNodeDto();
+        if (request.getProjectId() !=null){
+            tree = dirService.getProjectTree(testCase.getProjectId(), testCase.getProductLineId(), testCase.getChannel());
+        } else {
+            tree = dirService.getDirTree(testCase.getProductLineId(), testCase.getChannel());
+        }
         updateDFS(packageTree(tree), String.valueOf(request.getId()), new HashSet<>(addBizs), new HashSet<>(rmBizs));
         updateBiz(testCase, tree);
 
