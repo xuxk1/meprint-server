@@ -7,6 +7,7 @@ import me.xiaokui.modules.persistent.CaseBackup;
 import me.xiaokui.modules.system.service.CaseBackupService;
 import me.xiaokui.modules.mapper.CaseBackupMapper;
 import me.xiaokui.modules.util.TimeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class CaseBackupServiceImpl implements CaseBackupService {
 
 
+    @Autowired
     private CaseBackupMapper caseBackupMapper;
 
     @Override

@@ -37,7 +37,7 @@ public class JiraUtil {
     private static String ONLINE_URI = "/rest/gadget/1.0/statistics?jql=project%3D10100&statType=assignees";
     private static String UPCOMING_URI = "/rest/gadget/1.0/statistics?filterId=10602&statType=assignees";
     private static String DEV_URI = "/rest/gadget/1.0/statistics?filterId=10601&statType=customfield_10600";
-    private static String Cookies = "JSESSIONID=2FA46279028912D78A8E3D0165328103; seraph.rememberme.cookie=11548%3Ab3d0be71a6dad2281aa12404a77e19273725e6c1; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_cb085df43704a667ff441dae14cc84860217ef64_lin";
+    private static String Cookies = "JSESSIONID=746922838003C9B9418E414066BBA300; seraph.rememberme.cookie=11577%3A019fd1ee7cd40ab86f6196d0b505076043dd280a; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_a3793c456f0d34a220aaed5806e7b737781666cb_lin";
     private static String DEFAULT_ENCODING = "UTF-8";
     private static String DEFUALT_CONTENT_TYPE = "application/json";
     private static String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36";

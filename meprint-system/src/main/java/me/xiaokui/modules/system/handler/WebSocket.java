@@ -147,8 +147,11 @@ public class WebSocket {
             }
         });
     }
-
-    @OnMessage(maxMessageSize = 1048576)
+    /**
+     *maxMessageSize=1048576
+     *
+     */
+    @OnMessage(maxMessageSize = 838860800)
     public void onMessage(@PathParam(value = "caseId") String caseId, @PathParam(value = "recordId") String recordId,
                           String message, Session session) throws IOException {
         long record = recordId.equals(CaseWsMessages.UNDEFINED.getMsg()) ? 0l : Long.valueOf(recordId);
@@ -160,6 +163,7 @@ public class WebSocket {
                     boolean dontSwallowException = false;
                     try {
                         char messageType = message.charAt(0);
+                        LOGGER.info("message=======" + message + "\n" + "messageType=======" + messageType);
                         String messageContent = message.substring(1);
                         switch (messageType) {
                             case '0': // 处理ping/pong消息

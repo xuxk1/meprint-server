@@ -84,7 +84,6 @@ public class CaseServiceImpl implements CaseService {
         List<CaseListResp> res = new ArrayList<>();
         List<Long> caseIds;
         if (request.getProjectId()!=null){
-            LOGGER.info("getProjectId======" + request.getProjectId());
             caseIds = dirService.getCaseIdLists(request.getProjectId(), request.getLineId(), request.getBizId(), request.getChannel());
         } else {
             caseIds = dirService.getCaseIds(request.getLineId(), request.getBizId(), request.getChannel());

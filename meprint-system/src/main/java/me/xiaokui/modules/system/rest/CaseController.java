@@ -10,6 +10,7 @@ import me.xiaokui.modules.system.domain.request.cases.*;
 import me.xiaokui.modules.system.domain.request.ws.WsSaveReq;
 import me.xiaokui.modules.system.domain.response.controller.Response;
 import me.xiaokui.modules.system.service.CaseService;
+import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.mapper.BizMapper;
 import me.xiaokui.modules.util.exception.CaseServerException;
@@ -224,17 +225,16 @@ public class CaseController {
      * @return 响应体
      */
     @PostMapping(value = "/update")
-    public ResponseEntity<Object> updateWsCase(@RequestBody WsSaveReq req) {
+    public Response<?> updateWsCase(@RequestBody WsSaveReq req) {
         try {
             caseService.wsSave(req);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return Response.success();
         } catch (CaseServerException e) {
             throw new CaseServerException(e.getLocalizedMessage(), e.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("[Case Update]Update test case failed. params={} e={} ", req.toString(), e.getMessage());
-//            return Response.build(StatusCode.SERVER_BUSY_ERROR);
-            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+            return Response.build(StatusCode.SERVER_BUSY_ERROR);
         }
     }
 
