@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xmap-content>
+  <sheet id="53ptgae5ptd1886rc7i8k40boa" modified-by="didi" theme="7473aupb6bv1i2bstr1sgj7bo9" timestamp="1611739849951">
+    <topic id="30b83miju81tjfk6r7mufq0keu" modified-by="didi" timestamp="1618214119030">
+      <title>企业版</title>
+      <children>
+        <topics type="attached">
+          <topic id="2bc76g0rh289e8oj5o658igi8g" modified-by="didi" timestamp="1618213177550">
+            <title>登录页</title>
+            <children>
+              <topics type="attached">
+                <topic id="7be17uvmnljt99s1eu1ugp196h" modified-by="didi" timestamp="1614073356261">
+                  <title>页面</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="6fgft45rlnn1bbfcenrq779p4g" modified-by="didi" timestamp="1614073328115">
+                        <title>图片展示正常</title>
+                      </topic>
+                      <topic id="62ip2kcbbo12fc0ltbq02vopqi" modified-by="didi" timestamp="1614073352831">
+                        <title>文案展示正常</title>
+                      </topic>
+                      <topic id="3ikhq2psbh981oc5pd7c2k3k0a" modified-by="didi" timestamp="1614073363231">
+                        <title>样式显示正常</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+                <topic id="2pae7556bp8parnm2idutc0vdm" modified-by="didi" timestamp="1614073308912">
+                  <title>在线咨询</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="7talikmj7h7p05dc2gjer2s069" modified-by="didi" timestamp="1614073314769">
+                        <title>图标点击</title>
+                      </topic>
+                      <topic id="2gp3f2dbv89ctduu66c1em7f59" modified-by="didi" timestamp="1614072807059">
+                        <title>点击咨询</title>
+                      </topic>
+                      <topic id="6eliofts2rve74mqj07ith0kq2" modified-by="didi" timestamp="1614073311687">
+                        <title>正常跳转至客服聊天页面</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+                <topic id="15cojh3btrdkplqqmq30g4o6a4" modified-by="didi" timestamp="1614072444534">
+                  <title>中英文切换</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="13a88n2rsfa24jl7lpcr0p8i02" modified-by="didi" timestamp="1614072459952">
+                        <title>中英文切换页面显示正常</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+                <topic id="5re3jks99mschluddcb9i6goin" modified-by="didi" timestamp="1618213207148">
+                  <title>账号登录</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="12kkfib1p69duhheishdk8oj5t" modified-by="didi" timestamp="1618213230252">
+                        <title>手机号</title>
+                        <children>
+                          <topics type="attached">
+                            <topic id="569b1to3ibe896bmrls87ga6at" modified-by="didi" timestamp="1618213238765">
+                              <title>正常输入手机号码</title>
+                            </topic>
+                            <topic id="2rumsi42fos0ktnh43vu2moqb0" modified-by="didi" timestamp="1618213437672">
+                              <title>异常</title>
+                              <children>
+                                <topics type="attached">
+                                  <topic id="6rprsik8v6e6fhvtaqvc0oulnv" modified-by="didi" timestamp="1618213268177">
+                                    <title>手机号码超出11位</title>
+                                  </topic>
+                                  <topic id="47m6lu3qqr0q5o6o90jqi82vae" modified-by="didi" timestamp="1618213309291">
+                                    <title>输入中英文，特殊字符</title>
+                                  </topic>
+                                  <topic id="06uqa5s56e20jmuqafa8dppb4t" modified-by="didi" timestamp="1618213347744">
+                                    <title>混合输入中英文，特殊字符</title>
+                                  </topic>
+                                  <topic id="5it5hmchn3du4h6fg1no4ltc7t" modified-by="didi" timestamp="1618213455980">
+                                    <title>手机号为空</title>
+                                  </topic>
+                                </topics>
+                              </children>
+                            </topic>
+                          </topics>
+                        </children>
+                      </topic>
+                      <topic id="1cvpnjalf7uvuoumt4qlsf41bm" modified-by="didi" timestamp="1618213538975">
+                        <title>密码</title>
+                        <children>
+                          <topics type="attached">
+                            <topic id="2lm5kekvfsd151bhgmqiublff5" modified-by="didi" timestamp="1618213546882">
+                              <title>正常输入密码</title>
+                            </topic>
+                            <topic id="0bqko51pkm2k0sbmq0pt34n71e" modified-by="didi" timestamp="1618213538961">
+                              <title>异常</title>
+                              <children>
+                                <topics type="attached">
+                                  <topic id="09hqudigct1nk229j1thhn4fhe" modified-by="didi" timestamp="1618213565422">
+                                    <title>密码超长输入</title>
+                                  </topic>
+                                  <topic id="24j4l8q8u7sh332keg7fcsemtj" modified-by="didi" timestamp="1618213538960">
+                                    <title>输入中英文，特殊字符</title>
+                                  </topic>
+                                  <topic id="1p8scjh0k6gs1l1ahl6st2oc7g" modified-by="didi" timestamp="1618213538961">
+                                    <title>混合输入中英文，特殊字符</title>
+                                  </topic>
+                                  <topic id="6od2m5p713ijkk7m5mjtji37vu" modified-by="didi" timestamp="1618213579237">
+                                    <title>密码为空</title>
+                                  </topic>
+                                </topics>
+                              </children>
+                            </topic>
+                          </topics>
+                        </children>
+                      </topic>
+                      <topic id="1a9kcldltq5nafqe7ap3m0784i" modified-by="didi" timestamp="1618213758640">
+                        <title>登录</title>
+                        <children>
+                          <topics type="attached">
+                            <topic id="1bftp26u8m1ap9e33fik5gc6li" modified-by="didi" timestamp="1618214175364">
+                              <title>手机号或密码为空，点击登录按钮，查看是否有异常提示</title>
+                            </topic>
+                            <topic id="1ukh2ioi4d9fgo6jmlalrn560j" modified-by="didi" timestamp="1618213833906">
+                              <title>手机号码或密码输入中英文，特殊字符时，点击登录按钮，查看是否有异常提示</title>
+                            </topic>
+                            <topic id="4mlmsgp1ho26t86jlba23m6pru" modified-by="didi" timestamp="1618213744116">
+                              <title>正常输入手机号和密码，点击登录，用户能够登录成功</title>
+                            </topic>
+                          </topics>
+                        </children>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+                <topic id="00lr0ikthdm62devk0lumh5hec" modified-by="didi" timestamp="1618214195869">
+                  <title>免费试用(注册)</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="42dfr5oj34sn4h0uhvs5d3f1kn" modified-by="didi" timestamp="1618214119030">
+                        <title>手机号</title>
+                      </topic>
+                      <topic id="1tin8fc7h0ag86bn01bksltd97" modified-by="didi" timestamp="1618213966343">
+                        <title>验证码</title>
+                        <children>
+                          <topics type="attached">
+                            <topic id="6ntt7rdnhokgsn688cjpd9navp" modified-by="didi" timestamp="1618213983668">
+                              <title>验证码超出6位数</title>
+                            </topic>
+                            <topic id="4sp479q8inks4fbvmcs80bhaqr" modified-by="didi" timestamp="1618213966328">
+                              <title>输入中英文，特殊字符</title>
+                            </topic>
+                            <topic id="2mfqslvkh4v391hrmh4ar5s1kf" modified-by="didi" timestamp="1618213966328">
+                              <title>混合输入中英文，特殊字符</title>
+                            </topic>
+                            <topic id="5b52e12qpt7vj0vmpvjj6qtkor" modified-by="didi" timestamp="1618213996213">
+                              <title>验证码为空</title>
+                            </topic>
+                          </topics>
+                        </children>
+                      </topic>
+                      <topic id="136tff9oo4kbac15k44lt59h8s" modified-by="didi" timestamp="1618214081852">
+                        <title>密码</title>
+                      </topic>
+                      <topic id="3r92b06283etr86ls942fmoutr" modified-by="didi" timestamp="1614072899639">
+                        <title>确认密码</title>
+                      </topic>
+                      <topic id="6jjc13kp458qo5suvm1ba4kkj1" modified-by="didi" timestamp="1614072899639">
+                        <title>提交</title>
+                      </topic>
+                      <topic id="7etao1j7d2vmfduo4ffqmhu2sp" modified-by="didi" timestamp="1618214102123">
+                        <title>同上3</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+                <topic id="75g144k7p52v7ql0mel33d3u5p" modified-by="didi" timestamp="1618213183992">
+                  <title>忘记密码</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="cb5rzkkmau80" modified-by="didi" timestamp="1620264946226">
+                        <title>点击进入忘记密码页面</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="0hlhi4797679pagg4qent9hrb9" modified-by="didi" timestamp="1614074291217">
+            <title>米绘企业版花型商城</title>
+            <children>
+              <topics type="attached">
+                <topic id="6ec4ngdoroasci27232ntv47ba" modified-by="didi" timestamp="1614074472554">
+                  <title>品质</title>
+                  <children>
+                    <topics type="attached">
+                      <topic id="78e1lm5o4gesfttrti9qhb9ud4" modified-by="didi" timestamp="1614074478859">
+                        <title>增加优选</title>
+                      </topic>
+                    </topics>
+                  </children>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="7jjso8qb0rm0b9mtm34r7ke5a9" modified-by="didi" timestamp="1614046599327">
+            <title>权限</title>
+            <children>
+              <topics type="attached">
+                <topic id="3tijpqu4hv39tklndakhc492nl" modified-by="didi" timestamp="1614046599327">
+                  <title>PC</title>
+                </topic>
+                <topic id="1f0be4i1rud2pnkna221hu4u9b" modified-by="didi" timestamp="1614046599327">
+                  <title>小程序</title>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>

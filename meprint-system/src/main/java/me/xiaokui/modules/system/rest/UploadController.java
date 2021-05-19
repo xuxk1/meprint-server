@@ -1,8 +1,7 @@
 package me.xiaokui.modules.system.rest;
 
+import me.xiaokui.annotation.rest.AnonymousGetMapping;
 import me.xiaokui.constants.SystemConstant;
-import me.xiaokui.modules.util.enums.StatusCode;
-import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.system.domain.request.cases.FileImportReq;
@@ -17,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;

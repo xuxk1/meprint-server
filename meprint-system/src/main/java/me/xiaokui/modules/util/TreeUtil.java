@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import me.xiaokui.modules.system.domain.xmind.*;
 import me.xiaokui.modules.util.enums.ProgressEnum;
-import me.xiaokui.modules.system.domain.xmind.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Element;
 
@@ -304,7 +303,7 @@ public class TreeUtil {
                 marker_refs.addElement("marker-ref")
                         .addAttribute("marker-id",priority);
             }
-            if (((JSONObject) o).getJSONArray("children").size() > 0) {
+            if (((JSONObject) o).getJSONArray("children") !=null && ((JSONObject) o).getJSONArray("children").size() > 0) {
                 exportDataToXml(((JSONObject) o).getJSONArray("children"), topic);
             }
         }
