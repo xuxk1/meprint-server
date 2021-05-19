@@ -286,6 +286,7 @@
             <plugin>
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<<<<<<< HEAD
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
 <!--                <groupId>org.springframework.boot</groupId>-->
@@ -293,6 +294,13 @@
 <!--                <configuration>-->
 <!--                    <skip>true</skip>-->
 <!--                </configuration>-->
+=======
+               <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+>>>>>>> 5a2084ab210a1d899e756334c85c629aca2ebd61
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
