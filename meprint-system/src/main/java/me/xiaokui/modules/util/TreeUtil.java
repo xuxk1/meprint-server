@@ -7,6 +7,8 @@ import me.xiaokui.modules.system.domain.xmind.*;
 import me.xiaokui.modules.util.enums.ProgressEnum;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -19,6 +21,8 @@ import java.util.*;
  * @date 2020/11/26
  */
 public class TreeUtil {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TreeUtil.class);
 
     // 剥离出progress的内容
     public static JSONObject parse(String caseContent) {
@@ -172,6 +176,9 @@ public class TreeUtil {
             }
         }
         JSONArray children = root.getJSONArray("children");
+        if(children == null || children.size() == 0) {
+            return false;
+        }
         Iterator<Object> iterator = children.iterator();
         while (iterator.hasNext()) {
             JSONObject child = (JSONObject) iterator.next();
@@ -190,7 +197,7 @@ public class TreeUtil {
         }
         int res = 0;
 
-        JSONArray resource = root.getJSONObject("data").getJSONArray("resources");
+        JSONArray resource = root.getJSONObject("data").getJSONArray("resource");
 
         if (resource != null) {
             for (Object o : resource) {
@@ -199,7 +206,7 @@ public class TreeUtil {
         }
 
         JSONArray children = root.getJSONArray("children");
-        if(children.size() == 0) {
+        if(children == null || children.size() == 0) {
             return 1;
         }
         for (Object child : children) {

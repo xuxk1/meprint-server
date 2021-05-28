@@ -35,6 +35,13 @@ public interface ExecRecordMapper {
     ExecRecord selectOne(Long id);
 
     /**
+     * id查询执行任务
+     *
+     * @return 执行记录实体
+     */
+    List<ExecRecord> selectAll();
+
+    /**
      * 根据用例id获取所属的所有执行任务
      *
      * @param caseId 用例id
@@ -72,6 +79,13 @@ public interface ExecRecordMapper {
      * @param recordId 执行任务id
      */
     void delete(Long recordId);
+
+    /**
+     * 更新任务
+     *
+     * @param recordId 执行任务id
+     */
+    void updateById(Long recordId);
 
     /**
      * 批量删除执行任务

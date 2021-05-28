@@ -44,6 +44,16 @@ public class RecordController {
     }
 
     /**
+     * 列表 - 获取所有执行任务
+     *
+     * @return 响应体
+     */
+    @GetMapping(value = "/alllist")
+    public Response<?> getRecordAllList() {
+        return Response.success(recordService.getList());
+    }
+
+    /**
      * 列表 - 新增执行任务
      *
      * @param req 前端传参

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import me.xiaokui.constants.SystemConstant;
 import me.xiaokui.modules.mapper.BizMapper;
 import me.xiaokui.modules.mapper.ExecRecordMapper;
 import me.xiaokui.modules.mapper.TestCaseMapper;
@@ -116,7 +117,7 @@ public class CaseServiceImpl implements CaseService {
         if (testCase == null) {
             throw new CaseServerException("用例不存在", StatusCode.INTERNAL_ERROR);
         }
-        if (testCase.getIsDelete().equals(me.xiaokui.constants.SystemConstant.IS_DELETE)) {
+        if (testCase.getIsDelete().equals(IS_DELETE)) {
             throw new CaseServerException("用例已删除", StatusCode.INTERNAL_ERROR);
         }
         return buildDetailResp(testCase);
@@ -126,11 +127,10 @@ public class CaseServiceImpl implements CaseService {
     @Transactional(rollbackFor = Exception.class)
     public Long insertOrDuplicateCase(CaseCreateReq request) {
         TestCase testcase = buildCase(request);
-        LOGGER.info("testcase======" + testcase);
         caseMapper.insert(testcase);
         // 可能会多个加入  所以不要使用dirService.addCase()
         DirNodeDto tree = dirService.getDirTree(testcase.getProductLineId(), testcase.getChannel());
-        List<String> addBizs = Arrays.asList(request.getBizId().split(me.xiaokui.constants.SystemConstant.COMMA));
+        List<String> addBizs = Arrays.asList(request.getBizId().split(SystemConstant.COMMA));
         updateDFS(packageTree(tree), String.valueOf(testcase.getId()), new HashSet<>(addBizs), new HashSet<>());
         updateBiz(testcase, tree);
 
@@ -169,7 +169,7 @@ public class CaseServiceImpl implements CaseService {
     @Transactional(rollbackFor = Exception.class)
     public DirTreeResp deleteCase(Long caseId) {
         TestCase testCase = caseMapper.selectOne(caseId);
-        testCase.setIsDelete(me.xiaokui.constants.SystemConstant.IS_DELETE);
+        testCase.setIsDelete(IS_DELETE);
 
         // 删除所有操作记录
         List<ExecRecord> execRecords = recordMapper.getRecordListByCaseId(testCase.getId());
@@ -227,7 +227,7 @@ public class CaseServiceImpl implements CaseService {
         }
         if (!CollectionUtils.isEmpty(req.getResource())) {
             resourceSet = new HashSet<>(req.getResource());
-            if (!TreeUtil.getChosenCase(caseRoot, resourceSet, "resources")) {
+            if (!TreeUtil.getChosenCase(caseRoot, resourceSet, "resource")) {
                 caseRoot = null;
             }
         }
@@ -264,7 +264,7 @@ public class CaseServiceImpl implements CaseService {
         if (!StringUtils.isEmpty(req.getRecordId())) {
             RecordWsDto dto = recordService.getWsRecord(req.getRecordId());
             // 看看是不是有重合的执行人
-            List<String> names = Arrays.stream(dto.getExecutors().split(me.xiaokui.constants.SystemConstant.COMMA)).filter(e->!StringUtils.isEmpty(e)).collect(Collectors.toList());
+            List<String> names = Arrays.stream(dto.getExecutors().split(COMMA)).filter(e->!StringUtils.isEmpty(e)).collect(Collectors.toList());
             long count = names.stream().filter(e -> e.equals(req.getModifier())).count();
             String executors;
             if (count > 0) {
@@ -331,7 +331,7 @@ public class CaseServiceImpl implements CaseService {
     }
 
     private List<String> convertToList(String str) {
-        return Arrays.stream(str.split(me.xiaokui.constants.SystemConstant.COMMA)).collect(Collectors.toList());
+        return Arrays.stream(str.split(SystemConstant.COMMA)).collect(Collectors.toList());
     }
 
     /**
@@ -359,7 +359,7 @@ public class CaseServiceImpl implements CaseService {
         CaseDetailResp resp = new CaseDetailResp();
         BeanUtils.copyProperties(testCase, resp);
         resp.setBiz(
-                getBizFlatList(testCase.getProductLineId(), Arrays.asList(testCase.getBizId().split(me.xiaokui.constants.SystemConstant.COMMA)), testCase.getChannel())
+                getBizFlatList(testCase.getProductLineId(), Arrays.asList(testCase.getBizId().split(SystemConstant.COMMA)), testCase.getChannel())
                         .stream().filter(BizListResp::isSelect).collect(Collectors.toList())
         );
         resp.setProductLineId(testCase.getProductLineId());
@@ -434,7 +434,7 @@ public class CaseServiceImpl implements CaseService {
         ret.setCreator(request.getCreator());
         ret.setModifier(ret.getCreator());
         ret.setChannel(request.getChannel());
-        ret.setExtra(me.xiaokui.constants.SystemConstant.EMPTY_STR);
+        ret.setExtra(SystemConstant.EMPTY_STR);
         ret.setGmtCreated(new Date());
         ret.setGmtModified(new Date());
         ret.setCaseContent(content);

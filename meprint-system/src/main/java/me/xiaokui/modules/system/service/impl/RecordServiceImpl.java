@@ -95,6 +95,16 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    public List<RecordListResp> getList() {
+        List<RecordListResp> res = new ArrayList<>();
+        List<ExecRecord> execRecordList = recordMapper.selectAll();
+        for (ExecRecord record : execRecordList) {
+            res.add(buildList(record));
+        }
+        return res;
+    }
+
+    @Override
     public RecordGeneralInfoResp getGeneralInfo(Long recordId) {
         ExecRecord record = recordMapper.selectOne(recordId);
         if (record == null) {

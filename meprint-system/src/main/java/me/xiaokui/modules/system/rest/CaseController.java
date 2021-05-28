@@ -2,6 +2,7 @@ package me.xiaokui.modules.system.rest;
 
 import com.alibaba.fastjson.support.spring.annotation.ResponseJSONP;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.xiaokui.annotation.rest.AnonymousGetMapping;
 import me.xiaokui.exception.BadRequestException;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -62,7 +64,9 @@ public class CaseController {
      * @param size 页面承载量
      * @return 分页接口
      */
+    @ApiOperation("用例列表")
     @GetMapping(value = "/list")
+    @PreAuthorize("@el.check('case:list')")
     public ResponseEntity<Object> getCaseList(@RequestParam Integer channel, Long productLineId, String bizId,
                                               Long projectId, String title, String creator, String requirementId, String beginTime, String endTime,
                                               @RequestParam(defaultValue = "1") Integer page,
@@ -88,7 +92,9 @@ public class CaseController {
      * @param request 请求体
      * @return 响应体
      */
+    @ApiOperation("创建用例")
     @PostMapping(value = "/create")
+    @PreAuthorize("@el.check('case:create')")
     public ResponseEntity<Object> createOrCopyCase(@RequestBody CaseCreateReq request) {
         request.validate();
         try {
@@ -109,7 +115,9 @@ public class CaseController {
      * @param request 请求体
      * @return 响应体
      */
+    @ApiOperation("编辑用例")
     @PostMapping(value = "/edit")
+    @PreAuthorize("@el.check('case:edit')")
     public ResponseEntity<Object> editCase(@RequestBody CaseEditReq request) {
         request.validate();
         try {
@@ -130,7 +138,9 @@ public class CaseController {
      * @param request 请求体
      * @return 响应体
      */
+    @ApiOperation("删除用例")
     @PostMapping(value = "/delete")
+    @PreAuthorize("@el.check('case:delete')")
     public ResponseEntity<Object> deleteCase(@RequestBody CaseDeleteReq request) {
         LOGGER.info("caseId=====" + request);
         request.validate();
@@ -173,7 +183,7 @@ public class CaseController {
      * @param productLineId 业务线id
      * @return 响应体
      */
-    @AnonymousGetMapping(value = "/listCreators")
+    @GetMapping(value = "/listCreators")
     public ResponseEntity<Object> listCreators(@RequestParam @NotNull(message = "用例类型为空") Integer caseType,
                                                @RequestParam @NotNull(message = "业务线为空") Long productLineId) {
 //        return Response.success(caseService.listCreators(caseType, productLineId));
@@ -198,12 +208,10 @@ public class CaseController {
      * @return 响应体
      */
     @GetMapping(value = "/countByCondition")
-    public ResponseEntity<Object> getCountByCondition(@RequestParam @NotNull(message = "用例id为空") Long caseId,
-                                           @RequestParam @NotNull(message = "圈选优先级为空") String[] priority,
-                                           @RequestParam @NotNull(message = "圈选资源为空") String[] resource) {
+    public Response<?> getCountByCondition(@RequestParam Long caseId, String[] priority, String[] resource) {
         CaseConditionReq req = new CaseConditionReq(caseId, priority, resource);
         req.validate();
-        return new ResponseEntity<>(caseService.getCountByCondition(req), HttpStatus.OK);
+        return Response.success(caseService.getCountByCondition(req));
     }
 
     /**

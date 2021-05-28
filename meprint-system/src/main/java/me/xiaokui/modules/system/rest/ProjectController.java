@@ -73,7 +73,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.buildTree(new ArrayList<>(projectDtos)),HttpStatus.OK);
     }
 
-    @me.xiaokui.annotation.Log("新增项目")
+    @Log("新增项目")
     @ApiOperation("新增项目")
     @PostMapping
     @PreAuthorize("@el.check('project:add')")
@@ -85,7 +85,7 @@ public class ProjectController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @me.xiaokui.annotation.Log("修改项目")
+    @Log("修改项目")
     @ApiOperation("修改项目")
     @PutMapping
     @PreAuthorize("@el.check('project:edit')")

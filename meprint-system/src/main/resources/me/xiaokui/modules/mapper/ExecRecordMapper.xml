@@ -229,6 +229,15 @@
     and is_delete=0
     group by case_id
   </select>
+  <select id="selectAll" resultType="me.xiaokui.modules.persistent.ExecRecord">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exec_record
+    where is_delete = 0
+    order by id desc
+  </select>
 
   <update id="update" parameterType="me.xiaokui.modules.persistent.ExecRecord">
     update exec_record

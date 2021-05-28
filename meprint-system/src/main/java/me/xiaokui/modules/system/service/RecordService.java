@@ -36,6 +36,13 @@ public interface RecordService {
     List<RecordListResp> getListByCaseId(Long caseId);
 
     /**
+     * 查询该用例集下所有的执行任务
+     *
+     * @return 执行任务列表
+     */
+    List<RecordListResp> getList();
+
+    /**
      * 协同页面，获取上方基础信息
      *
      * @param recordId 操作记录id
