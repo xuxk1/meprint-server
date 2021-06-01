@@ -159,8 +159,8 @@ public class TreeUtil {
 
         boolean hasTags = false;
         //筛选标签
-        if (field.equals("resources")) {
-            JSONArray objects = root.getJSONObject("data").getJSONArray("resources");
+        if (field.equals("resource")) {
+            JSONArray objects = root.getJSONObject("data").getJSONArray("resource");
             if (objects != null) {
                 for (Object o : objects) {
                     hasTags = hasTags || tags.contains(o);
@@ -206,9 +206,7 @@ public class TreeUtil {
         }
 
         JSONArray children = root.getJSONArray("children");
-        if(children == null || children.size() == 0) {
-            return 1;
-        }
+        if(children.size() == 0) return 1;
         for (Object child : children) {
             res += getCaseNum((JSONObject) child, set);
         }
@@ -310,7 +308,7 @@ public class TreeUtil {
                 marker_refs.addElement("marker-ref")
                         .addAttribute("marker-id",priority);
             }
-            if (((JSONObject) o).getJSONArray("children") !=null && ((JSONObject) o).getJSONArray("children").size() > 0) {
+            if (((JSONObject) o).getJSONArray("children").size() > 0) {
                 exportDataToXml(((JSONObject) o).getJSONArray("children"), topic);
             }
         }
