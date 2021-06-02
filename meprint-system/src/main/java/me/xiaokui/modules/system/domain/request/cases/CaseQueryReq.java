@@ -49,9 +49,9 @@ public class CaseQueryReq implements ParamValidate {
         this.channel = channel;
         this.bizId = bizId;
         this.lineId = lineId;
-        this.projectId = projectId;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+        this.projectId = projectId;
     }
 
     @Override
