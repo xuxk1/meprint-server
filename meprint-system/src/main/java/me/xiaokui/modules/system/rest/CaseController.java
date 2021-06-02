@@ -60,20 +60,19 @@ public class CaseController {
      * @param beginTime 开始时间
      * @param endTime 结束时间
      * @param channel 1
-     * @param page 页码
-     * @param size 页面承载量
+     * @param pageNum 页码
+     * @param pageSize 页面承载量
      * @return 分页接口
      */
     @ApiOperation("用例列表")
     @GetMapping(value = "/list")
     @PreAuthorize("@el.check('case:list')")
     public ResponseEntity<Object> getCaseList(@RequestParam Integer channel, Long productLineId, String bizId,
-                                              Long projectId, String title, String creator, String requirementId, String beginTime, String endTime,
-                                              @RequestParam(defaultValue = "1") Integer page,
-                                              @RequestParam(defaultValue = "10") Integer size) {
+                                              Long projectId, String title, String creator, String requirementId,
+                                              String beginTime, String endTime, Integer pageNum, Integer pageSize) {
         try {
             CaseQueryReq caseQueryReq = new CaseQueryReq(0, title, creator, requirementId, beginTime,
-                    endTime, channel, bizId, productLineId, page, size, projectId);
+                    endTime, channel, bizId, productLineId, pageNum, pageSize, projectId);
             return new ResponseEntity<>(caseService.getCaseList(
                     caseQueryReq), HttpStatus.OK);
         } catch (CaseServerException e) {
