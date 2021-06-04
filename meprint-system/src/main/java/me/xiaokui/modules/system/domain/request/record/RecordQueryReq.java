@@ -34,8 +34,7 @@ public class RecordQueryReq {
         this.pageSize = pageSize;
     }
 
-    public RecordQueryReq(Integer channel, Integer pageNum, Integer pageSize) {
-        this.channel = channel;
+    public RecordQueryReq(Integer pageNum, Integer pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }

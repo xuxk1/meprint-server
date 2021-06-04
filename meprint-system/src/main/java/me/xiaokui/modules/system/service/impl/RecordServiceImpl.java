@@ -80,7 +80,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public PageModule<RecordListResp> getList(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
-        if (req.getChannel() !=null && req.getPageNum() !=null && req.getPageSize() !=null) {
+        if (req.getPageNum() !=null && req.getPageSize() !=null) {
             PageHelper.startPage(req.getPageNum(), req.getPageSize());
         }
         List<ExecRecord> execRecordList = recordMapper.selectAll();
