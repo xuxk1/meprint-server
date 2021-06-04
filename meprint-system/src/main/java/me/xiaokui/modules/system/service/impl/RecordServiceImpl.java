@@ -2,12 +2,14 @@ package me.xiaokui.modules.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import me.xiaokui.constants.SystemConstant;
 import me.xiaokui.modules.mapper.ExecRecordMapper;
 import me.xiaokui.modules.mapper.TestCaseMapper;
-import me.xiaokui.modules.system.domain.request.record.RecordAddReq;
-import me.xiaokui.modules.system.domain.request.record.RecordUpdateReq;
+import me.xiaokui.modules.system.domain.request.record.*;
 import me.xiaokui.modules.system.domain.request.ws.RecordWsClearReq;
+import me.xiaokui.modules.system.domain.response.controller.PageModule;
 import me.xiaokui.modules.system.domain.response.records.RecordGeneralInfoResp;
 import me.xiaokui.modules.system.domain.response.records.RecordListResp;
 import me.xiaokui.modules.system.domain.xmind.IntCount;
@@ -22,27 +24,11 @@ import me.xiaokui.modules.util.TreeUtil;
 import me.xiaokui.modules.util.enums.EnvEnum;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
-import me.xiaokui.modules.mapper.ExecRecordMapper;
-import me.xiaokui.modules.mapper.TestCaseMapper;
-import me.xiaokui.modules.util.enums.StatusCode;
-import me.xiaokui.modules.system.service.dto.MergeCaseDto;
-import me.xiaokui.modules.system.service.dto.PickCaseDto;
 import me.xiaokui.modules.system.service.dto.RecordWsDto;
-import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.persistent.ExecRecord;
 import me.xiaokui.modules.persistent.TestCase;
 import me.xiaokui.modules.system.domain.request.record.RecordAddReq;
 import me.xiaokui.modules.system.domain.request.record.RecordUpdateReq;
-import me.xiaokui.modules.system.domain.request.ws.RecordWsClearReq;
-import me.xiaokui.modules.system.domain.response.records.RecordGeneralInfoResp;
-import me.xiaokui.modules.system.domain.response.records.RecordListResp;
-import me.xiaokui.modules.system.domain.xmind.IntCount;
-import me.xiaokui.modules.system.handler.Room;
-import me.xiaokui.modules.system.handler.WebSocket;
-import me.xiaokui.modules.system.service.RecordService;
-import me.xiaokui.modules.util.BitBaseUtil;
-import me.xiaokui.modules.util.TreeUtil;
-import me.xiaokui.modules.util.enums.EnvEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -54,9 +40,6 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
-import static me.xiaokui.modules.util.TimeUtil.compareToOriginalDate;
-import static me.xiaokui.constants.SystemConstant.EMPTY_STR;
-import static me.xiaokui.constants.SystemConstant.NOT_DELETE;
 
 /**
  * 执行任务实现类
@@ -95,13 +78,17 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public List<RecordListResp> getList() {
+    public PageModule<RecordListResp> getList(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
+        if (req.getChannel() !=null && req.getPageNum() !=null && req.getPageSize() !=null) {
+            PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        }
         List<ExecRecord> execRecordList = recordMapper.selectAll();
         for (ExecRecord record : execRecordList) {
             res.add(buildList(record));
         }
-        return res;
+
+        return PageModule.buildPage(res, ((Page<ExecRecord>) execRecordList).getTotal());
     }
 
     @Override

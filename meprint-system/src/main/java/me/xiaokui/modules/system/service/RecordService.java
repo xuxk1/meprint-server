@@ -1,17 +1,14 @@
 package me.xiaokui.modules.system.service;
 
-import me.xiaokui.modules.system.domain.request.record.RecordAddReq;
-import me.xiaokui.modules.system.domain.request.record.RecordUpdateReq;
+import me.xiaokui.modules.system.domain.request.record.*;
 import me.xiaokui.modules.system.domain.request.ws.RecordWsClearReq;
+import me.xiaokui.modules.system.domain.response.controller.PageModule;
 import me.xiaokui.modules.system.domain.response.records.RecordGeneralInfoResp;
 import me.xiaokui.modules.system.domain.response.records.RecordListResp;
 import me.xiaokui.modules.system.service.dto.RecordWsDto;
 import me.xiaokui.modules.persistent.ExecRecord;
 import me.xiaokui.modules.system.domain.request.record.RecordAddReq;
 import me.xiaokui.modules.system.domain.request.record.RecordUpdateReq;
-import me.xiaokui.modules.system.domain.request.ws.RecordWsClearReq;
-import me.xiaokui.modules.system.domain.response.records.RecordGeneralInfoResp;
-import me.xiaokui.modules.system.domain.response.records.RecordListResp;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,10 +34,10 @@ public interface RecordService {
 
     /**
      * 查询该用例集下所有的执行任务
-     *
+     * @param request 请求体
      * @return 执行任务列表
      */
-    List<RecordListResp> getList();
+    PageModule<RecordListResp> getList(RecordQueryReq request);
 
     /**
      * 协同页面，获取上方基础信息

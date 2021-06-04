@@ -1,5 +1,6 @@
 package me.xiaokui.modules.system.rest;
 
+import me.xiaokui.modules.system.domain.request.record.RecordQueryReq;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.util.enums.StatusCode;
@@ -49,8 +50,9 @@ public class RecordController {
      * @return 响应体
      */
     @GetMapping(value = "/alllist")
-    public Response<?> getRecordAllList() {
-        return Response.success(recordService.getList());
+    public Response<?> getRecordAllList(@RequestParam Integer channel, Integer pageNum, Integer pageSize) {
+        RecordQueryReq req = new RecordQueryReq(channel, pageNum, pageSize);
+        return Response.success(recordService.getList(req));
     }
 
     /**
