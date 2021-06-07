@@ -14,6 +14,8 @@ import java.util.List;
 @Data
 public class RecordQueryReq {
 
+    private Long caseId;
+
     private Integer channel;
 
     private List<Long> reqIds;
@@ -30,6 +32,12 @@ public class RecordQueryReq {
         }
         this.channel = channel;
         this.reqIds = reqIdList;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
+    public RecordQueryReq(Long caseId, Integer pageNum, Integer pageSize) {
+        this.caseId = caseId;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }

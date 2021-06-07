@@ -27,10 +27,10 @@ public interface RecordService {
     /**
      * 根据用例集caseId，查询该用例集下所有的执行任务
      *
-     * @param caseId 任务所属的用例集id
+     * @param request 任务所属的用例集id
      * @return 执行任务列表
      */
-    List<RecordListResp> getListByCaseId(Long caseId);
+    PageModule<RecordListResp> getListByCaseId(RecordQueryReq request);
 
     /**
      * 查询该用例集下所有的执行任务

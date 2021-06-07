@@ -67,21 +67,21 @@ public class CaseController {
     @ApiOperation("用例列表")
     @GetMapping(value = "/list")
     @PreAuthorize("@el.check('case:list')")
-    public ResponseEntity<Object> getCaseList(@RequestParam Integer channel, Long productLineId, String bizId,
+    public Response<?> getCaseList(@RequestParam Integer channel, Long productLineId, String bizId,
                                               Long projectId, String title, String creator, String requirementId,
                                               String beginTime, String endTime, Integer pageNum, Integer pageSize) {
         try {
             CaseQueryReq caseQueryReq = new CaseQueryReq(0, title, creator, requirementId, beginTime,
                     endTime, channel, bizId, productLineId, pageNum, pageSize, projectId);
-            return new ResponseEntity<>(caseService.getCaseList(
-                    caseQueryReq), HttpStatus.OK);
+            return Response.success(caseService.getCaseList(
+                    caseQueryReq));
         } catch (CaseServerException e) {
             throw new CaseServerException(e.getLocalizedMessage(), e.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("[Case list]view list case failed. params={}, e={} ", channel, productLineId, bizId, e.getMessage());
 //            return Response.build(StatusCode.SERVER_BUSY_ERROR);
-            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+            return Response.success(HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
 

@@ -26,12 +26,14 @@ public class WebController {
         return "index";
     }
 
-    @RequestMapping(value ="/caseManager/1/*/*/*")
+//    @RequestMapping(value ="/caseManager/1/*/*/*")
+    @RequestMapping(value ="/system/task/task")
     public String tcRecord(){
         return "index";
     }
 
-    @RequestMapping(value ="/caseManager/1/*/*")
+//    @RequestMapping(value ="/caseManager/1/*/*")
+    @RequestMapping(value ="/system/case/xmind")
     public String tcCase(){
         return "index";
     }

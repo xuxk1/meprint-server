@@ -40,8 +40,9 @@ public class RecordController {
      * @return 响应体
      */
     @GetMapping(value = "/list")
-    public Response<?> getRecordList(@RequestParam @NotNull(message = "用例id为空") Long caseId) {
-        return Response.success(recordService.getListByCaseId(caseId));
+    public Response<?> getRecordList(@RequestParam @NotNull(message = "用例id为空") Long caseId, Integer pageNum, Integer pageSize) {
+        RecordQueryReq req = new RecordQueryReq(caseId, pageNum, pageSize);
+        return Response.success(recordService.getListByCaseId(req));
     }
 
     /**

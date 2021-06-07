@@ -63,18 +63,18 @@ public class RecordServiceImpl implements RecordService {
     private TestCaseMapper caseMapper;
 
     @Override
-    public List<RecordListResp> getListByCaseId(Long caseId) {
+    public PageModule<RecordListResp> getListByCaseId(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
-        TestCase testCase = caseMapper.selectOne(caseId);
+        TestCase testCase = caseMapper.selectOne(req.getCaseId());
         if (testCase == null) {
             throw new CaseServerException("用例不存在", StatusCode.NOT_FOUND_ENTITY);
         }
-
-        List<ExecRecord> execRecordList = recordMapper.getRecordListByCaseId(caseId);
+        PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        List<ExecRecord> execRecordList = recordMapper.getRecordListByCaseId(req.getCaseId());
         for (ExecRecord record : execRecordList) {
             res.add(buildList(record));
         }
-        return res;
+        return PageModule.buildPage(res, ((Page<ExecRecord>) execRecordList).getTotal());
     }
 
     @Override
