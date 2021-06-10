@@ -215,7 +215,7 @@ public abstract class Room {
 //                            + "," + msg.toString();
                     if (i > 0) {
                         sb.append("|");
-                        LOGGER.error(Thread.currentThread().getName() + ": client: " + p.getClient().getClientName() + " 此处可能会有问题，待处理 by肖锋. sb: " + sb);
+                        LOGGER.error(Thread.currentThread().getName() + ": client: " + p.getClient().getClientName() + " 此处可能会有问题，待处理: " + sb);
                     }
 
                     sb.append(msg);

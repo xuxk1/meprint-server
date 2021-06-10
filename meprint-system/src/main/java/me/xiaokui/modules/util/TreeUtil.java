@@ -242,9 +242,11 @@ public class TreeUtil {
     }
 
     static boolean isPriorityIn(Integer data, List<String> priorities) {
-        for (String priority : priorities) {
-            if (data == Integer.parseInt(priority)) {
-                return true;
+        if (data !=null && priorities !=null) {
+            for (String priority : priorities) {
+                if (data == Integer.parseInt(priority)) {
+                    return true;
+                }
             }
         }
         return false;
