@@ -81,7 +81,7 @@ public class DeptController {
         return new ResponseEntity<>(deptService.buildTree(new ArrayList<>(deptDtos)),HttpStatus.OK);
     }
 
-    @me.xiaokui.annotation.Log("新增部门")
+    @Log("新增部门")
     @ApiOperation("新增部门")
     @PostMapping
     @PreAuthorize("@el.check('dept:add')")
@@ -93,7 +93,7 @@ public class DeptController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @me.xiaokui.annotation.Log("修改部门")
+    @Log("修改部门")
     @ApiOperation("修改部门")
     @PutMapping
     @PreAuthorize("@el.check('dept:edit')")

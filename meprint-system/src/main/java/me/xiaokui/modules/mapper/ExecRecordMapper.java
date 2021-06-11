@@ -2,9 +2,11 @@ package me.xiaokui.modules.mapper;
 
 import me.xiaokui.modules.system.service.dto.RecordNumDto;
 import me.xiaokui.modules.persistent.ExecRecord;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -93,5 +95,19 @@ public interface ExecRecordMapper {
      * @param recordIds 执行任务id列表
      */
     void batchDelete(List<Long> recordIds);
+
+    /**
+     * 条件筛选测试用例
+     *
+     * @param title 标题
+     * @param owner 创建人
+     * @param expectStartTime 开始时间
+     * @param expectEndTime 结束时间
+     * @return 筛选后的列表
+     */
+    List<ExecRecord> search(@Param("title") String title,
+                          @Param("owner") String owner,
+                          @Param("expectStartTime") Date expectStartTime,
+                          @Param("expectEndTime") Date expectEndTime);
 }
 

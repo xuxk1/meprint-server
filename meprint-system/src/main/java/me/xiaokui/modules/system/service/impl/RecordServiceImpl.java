@@ -80,10 +80,21 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public PageModule<RecordListResp> getList(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
+        List<ExecRecord> execRecordList;
+
         if (req.getPageNum() !=null && req.getPageSize() !=null) {
             PageHelper.startPage(req.getPageNum(), req.getPageSize());
         }
-        List<ExecRecord> execRecordList = recordMapper.selectAll();
+
+        if (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null)) {
+            Date beginTime = transferTime(req.getExpectStartTime());
+            Date endTime = transferTime(req.getExpectEndTime());
+            execRecordList = recordMapper.search(req.getTitle(),
+                    req.getOwner(), beginTime, endTime);
+        }else {
+            execRecordList = recordMapper.selectAll();
+        }
+
         for (ExecRecord record : execRecordList) {
             res.add(buildList(record));
         }
@@ -399,5 +410,18 @@ public class RecordServiceImpl implements RecordService {
         IntCount execCount = new IntCount(recordObj.size());
         TreeUtil.mergeExecRecord(content.getJSONObject("root"), recordObj, execCount);
         return TreeUtil.parse(content.toJSONString());
+    }
+
+    /**
+     * 字符串时间转date
+     *
+     * @param time 时间字符串
+     * @return 如果字符串为空，那么Date也为空
+     */
+    private Date transferTime(String time) {
+        if (time == null) {
+            return null;
+        }
+        return TimeUtil.transferStrToDateInSecond(time);
     }
 }

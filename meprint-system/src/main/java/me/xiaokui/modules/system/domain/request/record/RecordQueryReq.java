@@ -1,6 +1,8 @@
 package me.xiaokui.modules.system.domain.request.record;
 
 import lombok.Data;
+import me.xiaokui.modules.system.domain.request.ParamValidate;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,19 @@ import java.util.List;
  * @date 2020/8/24
  */
 @Data
-public class RecordQueryReq {
+public class RecordQueryReq implements ParamValidate {
 
     private Long caseId;
+
+    private String title;
+
+    private String owner;
+
+    private String requirementId;
+
+    private String expectStartTime;
+
+    private String expectEndTime;
 
     private Integer channel;
 
@@ -42,8 +54,24 @@ public class RecordQueryReq {
         this.pageSize = pageSize;
     }
 
-    public RecordQueryReq(Integer pageNum, Integer pageSize) {
+    public RecordQueryReq(String title, String owner, String expectStartTime, String expectEndTime, Integer pageNum, Integer pageSize) {
+        this.title = title;
+        this.owner = owner;
+        this.expectStartTime = expectStartTime;
+        this.expectEndTime = expectEndTime;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public void validate() {
+
+        if (StringUtils.isEmpty(title)) {
+            throw new IllegalArgumentException("标题为空");
+        }
+
+        if (StringUtils.isEmpty(owner)) {
+            throw new IllegalArgumentException("负责人为空");
+        }
     }
 }

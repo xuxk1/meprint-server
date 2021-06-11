@@ -34,7 +34,7 @@ import java.util.*;
  * @Date 2021-04-09 18:02
  * @Memo 备注信息
  **/
-@Api(tags = "用例-项目管理")
+@Api(tags = "用例：项目管理")
 @RestController
 @RequestMapping("/api/project")
 @RequiredArgsConstructor

@@ -1,5 +1,9 @@
 package me.xiaokui.modules.system.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import me.xiaokui.annotation.Log;
 import me.xiaokui.modules.system.domain.request.record.RecordQueryReq;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
@@ -13,6 +17,7 @@ import me.xiaokui.modules.system.domain.response.controller.Response;
 import me.xiaokui.modules.system.service.RecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +30,8 @@ import javax.validation.constraints.NotNull;
  * @date 2020/11/20
  */
 @RestController
+@RequiredArgsConstructor
+@Api(tags = "系统：任务管理")
 @RequestMapping(value = "/api/record")
 public class RecordController {
 
@@ -39,7 +46,9 @@ public class RecordController {
      * @param caseId 用例集id
      * @return 响应体
      */
+    @ApiOperation("查询执行任务:根据ID获取所有执行任务")
     @GetMapping(value = "/list")
+    @PreAuthorize("@el.check('user:list','task:list')")
     public Response<?> getRecordList(@RequestParam @NotNull(message = "用例id为空") Long caseId, Integer pageNum, Integer pageSize) {
         RecordQueryReq req = new RecordQueryReq(caseId, pageNum, pageSize);
         return Response.success(recordService.getListByCaseId(req));
@@ -50,9 +59,14 @@ public class RecordController {
      *
      * @return 响应体
      */
+    @ApiOperation("查询所有执行任务")
+    @PreAuthorize("@el.check('task:list')")
     @GetMapping(value = "/alllist")
-    public Response<?> getRecordAllList(@RequestParam Integer pageNum, Integer pageSize) {
-        RecordQueryReq req = new RecordQueryReq(pageNum, pageSize);
+    public Response<?> getRecordAllList(@RequestParam(required = false)  String title,
+                                        @RequestParam(required = false)  String owner,
+                                        @RequestParam(required = false)  String expectStartTime,
+                                        @RequestParam(required = false)  String expectEndTime, Integer pageNum, Integer pageSize) {
+        RecordQueryReq req = new RecordQueryReq(title, owner, expectStartTime, expectEndTime, pageNum, pageSize);
         return Response.success(recordService.getList(req));
     }
 
@@ -62,6 +76,9 @@ public class RecordController {
      * @param req 前端传参
      * @return 响应体
      */
+    @Log("新增执行任务")
+    @ApiOperation("新增执行任务")
+    @PreAuthorize("@el.check('task:add')")
     @PostMapping(value = "/create")
     public Response<Long> createRecord(@RequestBody RecordAddReq req) {
         req.validate();
@@ -82,6 +99,9 @@ public class RecordController {
      * @param req 请求体
      * @return 响应体
      */
+    @Log("修改执行任务")
+    @ApiOperation("修改执行任务")
+    @PreAuthorize("@el.check('task:edit')")
     @PostMapping(value = "/edit")
     public Response<?> editRecord(@RequestBody RecordUpdateReq req) {
         req.validate();
@@ -103,6 +123,9 @@ public class RecordController {
      * @param req 请求体
      * @return 响应体
      */
+    @Log("删除执行任务")
+    @ApiOperation("删除执行任务")
+    @PreAuthorize("@el.check('task:del')")
     @PostMapping(value = "/delete")
     public Response<?> deleteRecord(@RequestBody RecordDeleteReq req) {
         req.validate();
@@ -124,6 +147,8 @@ public class RecordController {
      * @param req 请求体
      * @return 响应体
      */
+    @Log("清除执行记录")
+    @ApiOperation("清除执行记录")
     @PostMapping(value = "/clear")
     public Response<?> clearRecord(@RequestBody RecordWsClearReq req) {
         req.validate();
@@ -144,6 +169,8 @@ public class RecordController {
      * @param id 执行任务id
      * @return 响应体
      */
+    @Log("获取任务详情")
+    @ApiOperation("获取任务详情")
     @GetMapping(value = "/getRecordInfo")
     public Response<?> getRecordGeneralInfo(@RequestParam @NotNull(message = "任务id为空") Long id) {
         return Response.success(recordService.getGeneralInfo(id));

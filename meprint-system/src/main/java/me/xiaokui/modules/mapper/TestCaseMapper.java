@@ -63,6 +63,7 @@ public interface TestCaseMapper {
      * @param endTime 结束时间
      * @param channel 默认 1
      * @param productLineId 业务线id
+     * @param projectId 项目id
      * @return 筛选后的列表
      */
     List<TestCase> search(@Param("caseType") Integer caseType,

@@ -34,7 +34,7 @@ import javax.validation.constraints.NotNull;
  * @author didi
  * @date 2020/11/20
  */
-@Api(tags = "用例-用例管理")
+@Api(tags = "用例：用例管理")
 @RestController
 @RequestMapping("/api/case")
 @RequiredArgsConstructor
