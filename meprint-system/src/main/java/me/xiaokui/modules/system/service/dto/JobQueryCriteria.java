@@ -30,12 +30,12 @@ import java.util.List;
 @NoArgsConstructor
 public class JobQueryCriteria {
 
-    @me.xiaokui.annotation.Query(type = me.xiaokui.annotation.Query.Type.INNER_LIKE)
+    @Query(type = Query.Type.INNER_LIKE)
     private String name;
 
-    @me.xiaokui.annotation.Query
+    @Query
     private Boolean enabled;
 
-    @me.xiaokui.annotation.Query(type = Query.Type.BETWEEN)
+    @Query(type = Query.Type.BETWEEN)
     private List<Timestamp> createTime;
 }

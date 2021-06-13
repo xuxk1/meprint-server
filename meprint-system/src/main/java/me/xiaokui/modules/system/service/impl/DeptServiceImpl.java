@@ -29,15 +29,8 @@ import me.xiaokui.modules.system.service.mapstruct.DeptMapper;
 import me.xiaokui.utils.FileUtil;
 import me.xiaokui.utils.enums.DataScopeEnum;
 import me.xiaokui.modules.system.domain.Dept;
-import me.xiaokui.modules.system.domain.User;
-import me.xiaokui.modules.system.repository.RoleRepository;
-import me.xiaokui.modules.system.repository.UserRepository;
-import me.xiaokui.modules.system.service.dto.DeptDto;
-import me.xiaokui.modules.system.service.dto.DeptQueryCriteria;
 import me.xiaokui.utils.*;
-import me.xiaokui.modules.system.repository.DeptRepository;
 import me.xiaokui.modules.system.service.DeptService;
-import me.xiaokui.modules.system.service.mapstruct.DeptMapper;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -61,18 +54,18 @@ public class DeptServiceImpl implements DeptService {
     private final DeptRepository deptRepository;
     private final DeptMapper deptMapper;
     private final UserRepository userRepository;
-    private final me.xiaokui.utils.RedisUtils redisUtils;
+    private final RedisUtils redisUtils;
     private final RoleRepository roleRepository;
 
     @Override
     public List<DeptDto> queryAll(DeptQueryCriteria criteria, Boolean isQuery) throws Exception {
         Sort sort = new Sort(Sort.Direction.ASC, "deptSort");
-        String dataScopeType = me.xiaokui.utils.SecurityUtils.getDataScopeType();
+        String dataScopeType = SecurityUtils.getDataScopeType();
         if (isQuery) {
             if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
                 criteria.setPidIsNull(true);
             }
-            List<Field> fields = me.xiaokui.utils.QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
+            List<Field> fields = QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
             List<String> fieldNames = new ArrayList<String>(){{ add("pidIsNull");add("enabled");}};
             for (Field field : fields) {
                 //设置对象的访问权限，保证对private的属性的访问
@@ -87,9 +80,9 @@ public class DeptServiceImpl implements DeptService {
                 }
             }
         }
-        List<DeptDto> list = deptMapper.toDto(deptRepository.findAll((root, criteriaQuery, criteriaBuilder) -> me.xiaokui.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
+        List<DeptDto> list = deptMapper.toDto(deptRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
         // 如果为空，就代表为自定义权限或者本级权限，就需要去重，不理解可以注释掉，看查询结果
-        if(me.xiaokui.utils.StringUtils.isBlank(dataScopeType)){
+        if(StringUtils.isBlank(dataScopeType)){
             return deduplication(list);
         }
         return list;
@@ -99,7 +92,7 @@ public class DeptServiceImpl implements DeptService {
     @Cacheable(key = "'id:' + #p0")
     public DeptDto findById(Long id) {
         Dept dept = deptRepository.findById(id).orElseGet(Dept::new);
-        me.xiaokui.utils.ValidationUtil.isNull(dept.getId(),"Dept","id",id);
+        ValidationUtil.isNull(dept.getId(),"Dept","id",id);
         return deptMapper.toDto(dept);
     }
 
@@ -133,7 +126,7 @@ public class DeptServiceImpl implements DeptService {
             throw new me.xiaokui.exception.BadRequestException("上级不能为自己");
         }
         Dept dept = deptRepository.findById(resources.getId()).orElseGet(Dept::new);
-        me.xiaokui.utils.ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
+        ValidationUtil.isNull( dept.getId(),"Dept","id",resources.getId());
         resources.setId(dept.getId());
         deptRepository.save(resources);
         // 更新父节点中子节点数目

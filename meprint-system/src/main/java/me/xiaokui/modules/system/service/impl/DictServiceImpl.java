@@ -21,14 +21,11 @@ import me.xiaokui.modules.system.domain.Dict;
 import me.xiaokui.modules.system.service.DictService;
 import me.xiaokui.modules.system.service.dto.DictDto;
 import me.xiaokui.utils.FileUtil;
-import me.xiaokui.modules.system.domain.Dict;
 import me.xiaokui.modules.system.service.dto.DictDetailDto;
 import me.xiaokui.modules.system.service.dto.DictQueryCriteria;
-import me.xiaokui.utils.*;
 import me.xiaokui.modules.system.repository.DictRepository;
-import me.xiaokui.modules.system.service.DictService;
-import me.xiaokui.modules.system.service.dto.DictDto;
 import me.xiaokui.modules.system.service.mapstruct.DictMapper;
+import me.xiaokui.utils.QueryHelp;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,7 +50,7 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public Map<String, Object> queryAll(DictQueryCriteria dict, Pageable pageable){
-        Page<Dict> page = dictRepository.findAll((root, query, cb) -> me.xiaokui.utils.QueryHelp.getPredicate(root, dict, cb), pageable);
+        Page<Dict> page = dictRepository.findAll((root, query, cb) -> QueryHelp.getPredicate(root, dict, cb), pageable);
         return me.xiaokui.utils.PageUtil.toPage(page.map(dictMapper::toDto));
     }
 

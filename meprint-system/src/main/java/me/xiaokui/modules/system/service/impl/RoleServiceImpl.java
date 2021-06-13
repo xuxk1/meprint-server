@@ -28,6 +28,8 @@ import me.xiaokui.modules.system.service.dto.RoleQueryCriteria;
 import me.xiaokui.modules.system.service.dto.RoleSmallDto;
 import me.xiaokui.modules.system.service.dto.UserDto;
 import me.xiaokui.utils.CacheKey;
+import me.xiaokui.utils.QueryHelp;
+import me.xiaokui.utils.RedisUtils;
 import me.xiaokui.modules.security.service.UserCacheClean;
 import me.xiaokui.modules.system.repository.RoleRepository;
 import me.xiaokui.modules.system.repository.UserRepository;
@@ -72,13 +74,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDto> queryAll(RoleQueryCriteria criteria) {
-        return roleMapper.toDto(roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> me.xiaokui.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder)));
+        return roleMapper.toDto(roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder)));
     }
 
     @Override
     public Object queryAll(RoleQueryCriteria criteria, Pageable pageable) {
-        Page<Role> page = roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> me.xiaokui.utils.QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
-        return me.xiaokui.utils.PageUtil.toPage(page.map(roleMapper::toDto));
+        Page<Role> page = roleRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+        return PageUtil.toPage(page.map(roleMapper::toDto));
     }
 
     @Override
@@ -86,7 +88,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public RoleDto findById(long id) {
         Role role = roleRepository.findById(id).orElseGet(Role::new);
-        me.xiaokui.utils.ValidationUtil.isNull(role.getId(), "Role", "id", id);
+        ValidationUtil.isNull(role.getId(), "Role", "id", id);
         return roleMapper.toDto(role);
     }
 
@@ -94,7 +96,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void create(Role resources) {
         if (roleRepository.findByName(resources.getName()) != null) {
-            throw new me.xiaokui.exception.EntityExistException(Role.class, "username", resources.getName());
+            throw new EntityExistException(Role.class, "username", resources.getName());
         }
         roleRepository.save(resources);
     }

@@ -24,7 +24,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import me.xiaokui.modules.security.config.bean.SecurityProperties;
 import me.xiaokui.utils.RedisUtils;
-import me.xiaokui.modules.security.config.bean.SecurityProperties;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -17,7 +17,6 @@ package me.xiaokui.rest;
 
 import lombok.RequiredArgsConstructor;
 import me.xiaokui.annotation.Log;
-import me.xiaokui.annotation.Log;
 import me.xiaokui.domain.LocalStorage;
 import me.xiaokui.exception.BadRequestException;
 import me.xiaokui.service.LocalStorageService;

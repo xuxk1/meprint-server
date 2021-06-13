@@ -26,8 +26,6 @@ import me.xiaokui.domain.vo.EmailVo;
 import me.xiaokui.exception.BadRequestException;
 import me.xiaokui.modules.system.service.VerifyService;
 import me.xiaokui.utils.RedisUtils;
-import me.xiaokui.domain.vo.EmailVo;
-import me.xiaokui.modules.system.service.VerifyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

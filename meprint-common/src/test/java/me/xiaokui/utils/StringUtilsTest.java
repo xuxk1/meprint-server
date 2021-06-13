@@ -7,7 +7,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static me.xiaokui.utils.StringUtils.*;
 import static org.junit.Assert.*;
 
 public class StringUtilsTest {

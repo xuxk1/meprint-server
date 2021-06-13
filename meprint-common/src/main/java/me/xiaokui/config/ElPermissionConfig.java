@@ -16,7 +16,6 @@
 package me.xiaokui.config;
 
 import me.xiaokui.utils.SecurityUtils;
-import me.xiaokui.utils.SecurityUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;

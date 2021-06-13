@@ -20,7 +20,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import me.xiaokui.service.dto.LogQueryCriteria;
-import me.xiaokui.domain.Log;
 import me.xiaokui.repository.LogRepository;
 import me.xiaokui.service.LogService;
 import me.xiaokui.service.mapstruct.LogErrorMapper;

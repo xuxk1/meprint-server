@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
 import static org.junit.Assert.*;
-import static me.xiaokui.utils.FileUtil.*;
 
 public class FileUtilTest {
 

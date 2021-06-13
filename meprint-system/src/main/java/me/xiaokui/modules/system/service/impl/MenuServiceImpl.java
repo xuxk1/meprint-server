@@ -34,6 +34,8 @@ import me.xiaokui.utils.FileUtil;
 import me.xiaokui.modules.system.repository.MenuRepository;
 import me.xiaokui.modules.system.repository.UserRepository;
 import me.xiaokui.modules.system.service.mapstruct.MenuMapper;
+import me.xiaokui.utils.QueryHelp;
+import me.xiaokui.utils.RedisUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -57,14 +59,14 @@ public class MenuServiceImpl implements MenuService {
     private final UserRepository userRepository;
     private final MenuMapper menuMapper;
     private final RoleService roleService;
-    private final me.xiaokui.utils.RedisUtils redisUtils;
+    private final RedisUtils redisUtils;
 
     @Override
     public List<MenuDto> queryAll(MenuQueryCriteria criteria, Boolean isQuery) throws Exception {
         Sort sort = new Sort(Sort.Direction.ASC, "menuSort");
         if(isQuery){
             criteria.setPidIsNull(true);
-            List<Field> fields = me.xiaokui.utils.QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
+            List<Field> fields = QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
             for (Field field : fields) {
                 //设置对象的访问权限，保证对private的属性的访问
                 field.setAccessible(true);
@@ -78,7 +80,7 @@ public class MenuServiceImpl implements MenuService {
                 }
             }
         }
-        return menuMapper.toDto(menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> me.xiaokui.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
+        return menuMapper.toDto(menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
     }
 
     @Override

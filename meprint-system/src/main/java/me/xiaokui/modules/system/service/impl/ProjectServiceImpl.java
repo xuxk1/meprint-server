@@ -30,21 +30,6 @@ import me.xiaokui.modules.system.service.dto.ProjectQueryCriteria;
 import me.xiaokui.modules.system.service.mapstruct.ProjectMapper;
 import me.xiaokui.utils.FileUtil;
 import me.xiaokui.utils.enums.DataScopeEnum;
-import me.xiaokui.modules.system.domain.Dept;
-import me.xiaokui.modules.system.domain.Project;
-import me.xiaokui.modules.system.domain.User;
-import me.xiaokui.modules.system.repository.DeptRepository;
-import me.xiaokui.modules.system.repository.ProjectRepository;
-import me.xiaokui.modules.system.repository.RoleRepository;
-import me.xiaokui.modules.system.repository.UserRepository;
-import me.xiaokui.modules.system.service.DeptService;
-import me.xiaokui.modules.system.service.ProjectService;
-import me.xiaokui.modules.system.service.dto.DeptDto;
-import me.xiaokui.modules.system.service.dto.DeptQueryCriteria;
-import me.xiaokui.modules.system.service.dto.ProjectDto;
-import me.xiaokui.modules.system.service.dto.ProjectQueryCriteria;
-import me.xiaokui.modules.system.service.mapstruct.DeptMapper;
-import me.xiaokui.modules.system.service.mapstruct.ProjectMapper;
 import me.xiaokui.utils.*;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -81,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
             if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
                 criteria.setPidIsNull(true);
             }
-            List<Field> fields = me.xiaokui.utils.QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
+            List<Field> fields = QueryHelp.getAllFields(criteria.getClass(), new ArrayList<>());
             List<String> fieldNames = new ArrayList<String>(){{ add("pidIsNull");add("enabled");}};
             for (Field field : fields) {
                 //设置对象的访问权限，保证对private的属性的访问
@@ -98,7 +83,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         List<ProjectDto> list = projectMapper.toDto(projectRepository.findAll((root, criteriaQuery, criteriaBuilder) -> me.xiaokui.utils.QueryHelp.getPredicate(root,criteria,criteriaBuilder),sort));
         // 如果为空，就代表为自定义权限或者本级权限，就需要去重，不理解可以注释掉，看查询结果
-        if(me.xiaokui.utils.StringUtils.isBlank(dataScopeType)){
+        if(StringUtils.isBlank(dataScopeType)){
             return deduplication(list);
         }
         return list;
@@ -108,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Cacheable(key = "'id:' + #p0")
     public ProjectDto findById(Long id) {
         Project project = projectRepository.findById(id).orElseGet(Project::new);
-        me.xiaokui.utils.ValidationUtil.isNull(project.getId(),"Project","id",id);
+        ValidationUtil.isNull(project.getId(),"Project","id",id);
         return projectMapper.toDto(project);
     }
 

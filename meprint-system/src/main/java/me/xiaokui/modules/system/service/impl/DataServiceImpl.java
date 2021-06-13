@@ -22,11 +22,7 @@ import me.xiaokui.modules.system.service.dto.RoleSmallDto;
 import me.xiaokui.modules.system.service.dto.UserDto;
 import me.xiaokui.utils.enums.DataScopeEnum;
 import me.xiaokui.modules.system.domain.Dept;
-import me.xiaokui.modules.system.service.DataService;
 import me.xiaokui.modules.system.service.DeptService;
-import me.xiaokui.modules.system.service.RoleService;
-import me.xiaokui.modules.system.service.dto.RoleSmallDto;
-import me.xiaokui.modules.system.service.dto.UserDto;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -60,7 +56,7 @@ public class DataServiceImpl implements DataService {
         List<RoleSmallDto> roleSet = roleService.findByUsersId(user.getId());
         // 获取对应的部门ID
         for (RoleSmallDto role : roleSet) {
-            me.xiaokui.utils.enums.DataScopeEnum dataScopeEnum = DataScopeEnum.find(role.getDataScope());
+            DataScopeEnum dataScopeEnum = DataScopeEnum.find(role.getDataScope());
             switch (Objects.requireNonNull(dataScopeEnum)) {
                 case THIS_LEVEL:
                     deptIds.add(user.getDept().getId());

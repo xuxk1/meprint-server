@@ -22,7 +22,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -50,7 +49,7 @@ public class AppRun {
     }
 
     @Bean
-    public me.xiaokui.utils.SpringContextHolder springContextHolder() {
+    public SpringContextHolder springContextHolder() {
         return new SpringContextHolder();
     }
 

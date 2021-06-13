@@ -26,12 +26,10 @@ import me.xiaokui.utils.SpringContextHolder;
 import me.xiaokui.utils.StringUtils;
 import me.xiaokui.utils.ThrowableUtil;
 import me.xiaokui.config.thread.ThreadPoolExecutorUtil;
-import me.xiaokui.domain.vo.EmailVo;
 import me.xiaokui.modules.quartz.domain.QuartzJob;
 import me.xiaokui.modules.quartz.domain.QuartzLog;
 import me.xiaokui.modules.quartz.repository.QuartzLogRepository;
 import me.xiaokui.modules.quartz.service.QuartzJobService;
-import me.xiaokui.service.EmailService;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -54,9 +52,9 @@ public class ExecutionJob extends QuartzJobBean {
     public void executeInternal(JobExecutionContext context) {
         QuartzJob quartzJob = (QuartzJob) context.getMergedJobDataMap().get(QuartzJob.JOB_KEY);
         // 获取spring bean
-        QuartzLogRepository quartzLogRepository = me.xiaokui.utils.SpringContextHolder.getBean(QuartzLogRepository.class);
-        QuartzJobService quartzJobService = me.xiaokui.utils.SpringContextHolder.getBean(QuartzJobService.class);
-        me.xiaokui.utils.RedisUtils redisUtils = me.xiaokui.utils.SpringContextHolder.getBean(RedisUtils.class);
+        QuartzLogRepository quartzLogRepository = SpringContextHolder.getBean(QuartzLogRepository.class);
+        QuartzJobService quartzJobService = SpringContextHolder.getBean(QuartzJobService.class);
+        RedisUtils redisUtils = SpringContextHolder.getBean(RedisUtils.class);
 
         String uuid = quartzJob.getUuid();
 
@@ -77,7 +75,7 @@ public class ExecutionJob extends QuartzJobBean {
             future.get();
             long times = System.currentTimeMillis() - startTime;
             log.setTime(times);
-            if(me.xiaokui.utils.StringUtils.isNotBlank(uuid)) {
+            if(StringUtils.isNotBlank(uuid)) {
                 redisUtils.set(uuid, true);
             }
             // 任务状态
@@ -100,7 +98,7 @@ public class ExecutionJob extends QuartzJobBean {
             log.setTime(times);
             // 任务状态 0：成功 1：失败
             log.setIsSuccess(false);
-            log.setExceptionDetail(me.xiaokui.utils.ThrowableUtil.getStackTrace(e));
+            log.setExceptionDetail(ThrowableUtil.getStackTrace(e));
             // 任务如果失败了则暂停
             if(quartzJob.getPauseAfterFailure() != null && quartzJob.getPauseAfterFailure()){
                 quartzJob.setIsPause(false);
