@@ -65,7 +65,7 @@ public interface DirService {
 
     /**
      * 查询文件树
-     *
+     * @param productLineId 业务线id
      * @param projectId 项目id
      * @param channel 渠道 默认为1
      * @return 树

@@ -193,9 +193,9 @@ public class DirServiceImpl implements DirService {
 
     @Override
     public List<Long> getCaseIds(Long productLineId, String bizId, Integer channel) {
-        DirTreeResp resp = getAllCaseDir(getDirTree(productLineId, channel));
-        DirNodeDto dir = getDir(bizId, resp.getChildren().get(0));
-        Set<String> caseIds = dir.getCaseIds();
+//        DirTreeResp resp = getAllCaseDir(getDirTree(productLineId, channel));
+//        DirNodeDto dir = getDir(bizId, resp.getChildren().get(0));
+        Set<String> caseIds = caseMapper.findCaseIdsInBiz(productLineId, channel);
         return caseIds.stream().map(Long::valueOf).collect(Collectors.toList());
     }
 
