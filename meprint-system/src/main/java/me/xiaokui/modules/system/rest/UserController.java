@@ -98,7 +98,7 @@ public class UserController {
         return new ResponseEntity<>(me.xiaokui.utils.PageUtil.toPage(null,0),HttpStatus.OK);
     }
 
-    @me.xiaokui.annotation.Log("新增用户")
+    @Log("新增用户")
     @ApiOperation("新增用户")
     @PostMapping
     @PreAuthorize("@el.check('user:add')")
@@ -110,7 +110,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @me.xiaokui.annotation.Log("修改用户")
+    @Log("修改用户")
     @ApiOperation("修改用户")
     @PutMapping
     @PreAuthorize("@el.check('user:edit')")
@@ -120,7 +120,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @me.xiaokui.annotation.Log("修改用户：个人中心")
+    @Log("修改用户：个人中心")
     @ApiOperation("修改用户：个人中心")
     @PutMapping(value = "center")
     public ResponseEntity<Object> center(@Validated(User.Update.class) @RequestBody User resources){
@@ -131,7 +131,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @me.xiaokui.annotation.Log("删除用户")
+    @Log("删除用户")
     @ApiOperation("删除用户")
     @DeleteMapping
     @PreAuthorize("@el.check('user:del')")

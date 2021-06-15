@@ -9,21 +9,13 @@ import me.xiaokui.modules.mapper.TestCaseMapper;
 import me.xiaokui.modules.system.domain.request.cases.FileImportReq;
 import me.xiaokui.modules.system.domain.response.cases.ExportXmindResp;
 import me.xiaokui.modules.system.service.FileService;
-import me.xiaokui.modules.util.FileUtil;
+import me.xiaokui.modules.util.FileUtils;
 import me.xiaokui.modules.util.TreeUtil;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.util.exception.CaseServerException;
-import me.xiaokui.modules.mapper.TestCaseMapper;
-import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.persistent.TestCase;
-import me.xiaokui.modules.util.exception.CaseServerException;
 import me.xiaokui.modules.system.domain.request.cases.CaseCreateReq;
-import me.xiaokui.modules.system.domain.request.cases.FileImportReq;
-import me.xiaokui.modules.system.domain.response.cases.ExportXmindResp;
 import me.xiaokui.modules.system.service.CaseService;
-import me.xiaokui.modules.system.service.FileService;
-import me.xiaokui.modules.util.FileUtil;
-import me.xiaokui.modules.util.TreeUtil;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -40,9 +32,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static me.xiaokui.constants.SystemConstant.POINT;
-import static me.xiaokui.constants.XmindConstant.*;
 
 /**
  * 文件上传与导出实现类
@@ -94,7 +83,7 @@ public class FileServiceImpl implements FileService {
 
             // 开始转换
             req.getFile().transferTo(dest);
-            if (!FileUtil.decompressZip(desPath, desc)) {
+            if (!FileUtils.decompressZip(desPath, desc)) {
                 throw new CaseServerException("解析失败", StatusCode.FILE_IMPORT_ERROR);
             }
 
@@ -116,7 +105,7 @@ public class FileServiceImpl implements FileService {
 
         //压缩文件夹成xmind文件
         String filePath = pathMap.get("exportPath") + ".xmind";
-        FileUtil.compressZip(pathMap.get("exportPath") ,filePath);
+        FileUtils.compressZip(pathMap.get("exportPath") ,filePath);
         // 输出
         ByteArrayOutputStream byteArrayOutputStream = outPutFile(filePath);
         resp.setFileName(pathMap.get("exportFileName"));
@@ -279,7 +268,7 @@ public class FileServiceImpl implements FileService {
 
     private CaseCreateReq buildCaseByJson(FileImportReq request, String fileName) {
         // 开始读取文件中的json内容了
-        String s = FileUtil.readJsonFile(fileName);
+        String s = FileUtils.readJsonFile(fileName);
         JSONArray parseArray = JSONObject.parseArray(s);
         JSONObject getObj = parseArray.getJSONObject(0);
         JSONObject rootTopic = getObj.getJSONObject("rootTopic");

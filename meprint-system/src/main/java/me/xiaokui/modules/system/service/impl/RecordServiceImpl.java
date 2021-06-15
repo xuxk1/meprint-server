@@ -7,6 +7,8 @@ import com.github.pagehelper.PageHelper;
 import me.xiaokui.constants.SystemConstant;
 import me.xiaokui.modules.mapper.ExecRecordMapper;
 import me.xiaokui.modules.mapper.TestCaseMapper;
+import me.xiaokui.modules.system.domain.User;
+import me.xiaokui.modules.system.repository.UserRepository;
 import me.xiaokui.modules.system.domain.request.record.*;
 import me.xiaokui.modules.system.domain.request.ws.RecordWsClearReq;
 import me.xiaokui.modules.system.domain.response.controller.PageModule;
@@ -62,6 +64,9 @@ public class RecordServiceImpl implements RecordService {
     @Autowired
     private TestCaseMapper caseMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public PageModule<RecordListResp> getListByCaseId(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
@@ -80,19 +85,34 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public PageModule<RecordListResp> getList(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
-        List<ExecRecord> execRecordList;
+        List<ExecRecord> execRecordList = null;
+        User user = null;
+        Date beginTime;
+        Date endTime;
+        String nick_name = null;
 
         if (req.getPageNum() !=null && req.getPageSize() !=null) {
             PageHelper.startPage(req.getPageNum(), req.getPageSize());
         }
 
-        if (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null)) {
-            Date beginTime = transferTime(req.getExpectStartTime());
-            Date endTime = transferTime(req.getExpectEndTime());
-            execRecordList = recordMapper.search(req.getTitle(),
-                    req.getOwner(), beginTime, endTime);
-        }else {
-            execRecordList = recordMapper.selectAll();
+        if (req.getUserName() !=null ) {
+            user = userRepository.findByUsername(req.getUserName());
+            nick_name = user.getNickName();
+            if (user.getIsAdmin().equals(true) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null) {
+                execRecordList = recordMapper.selectAll();
+            }else if (user.getIsAdmin().equals(false) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null){
+                execRecordList = recordMapper.selectAllByOwner(nick_name);
+            }
+        }
+        LOGGER.info("user.getIsAdmin()====" + user.getIsAdmin());
+        if (user.getIsAdmin().equals(true) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))) {
+            beginTime = transferTime(req.getExpectStartTime());
+            endTime = transferTime(req.getExpectEndTime());
+            execRecordList = recordMapper.search(req.getTitle(), req.getOwner(), beginTime, endTime);
+        }else if (user.getIsAdmin().equals(false) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))){
+            beginTime = transferTime(req.getExpectStartTime());
+            endTime = transferTime(req.getExpectEndTime());
+            execRecordList = recordMapper.searchByOne(req.getTitle(), req.getOwner(), beginTime, endTime);
         }
 
         for (ExecRecord record : execRecordList) {

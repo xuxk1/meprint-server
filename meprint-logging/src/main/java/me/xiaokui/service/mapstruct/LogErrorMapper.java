@@ -18,7 +18,6 @@ package me.xiaokui.service.mapstruct;
 import me.xiaokui.service.dto.LogErrorDTO;
 import me.xiaokui.base.BaseMapper;
 import me.xiaokui.domain.Log;
-import me.xiaokui.service.dto.LogErrorDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

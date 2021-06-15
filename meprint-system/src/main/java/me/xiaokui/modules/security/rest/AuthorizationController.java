@@ -37,6 +37,8 @@ import me.xiaokui.modules.security.security.TokenProvider;
 import me.xiaokui.modules.security.service.dto.AuthUserDto;
 import me.xiaokui.modules.security.service.dto.JwtUserDto;
 import me.xiaokui.modules.security.service.OnlineUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -67,6 +69,7 @@ public class AuthorizationController {
     private final OnlineUserService onlineUserService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationController.class);
     @Resource
     private LoginProperties loginProperties;
 
@@ -78,8 +81,8 @@ public class AuthorizationController {
         // 查询验证码
         String code = (String) redisUtils.get(authUser.getUuid());
         // 清除验证码
-//        redisUtils.del(authUser.getUuid());
-        if (me.xiaokui.utils.StringUtils.isBlank(code)) {
+        redisUtils.del(authUser.getUuid());
+        if (StringUtils.isBlank(code)) {
             throw new me.xiaokui.exception.BadRequestException("验证码不存在或已过期");
         }
         if (StringUtils.isBlank(authUser.getCode()) || !authUser.getCode().equalsIgnoreCase(code)) {
@@ -101,7 +104,7 @@ public class AuthorizationController {
         }};
         if (loginProperties.isSingleLogin()) {
             //踢掉之前已经登录的token
-//            onlineUserService.checkLoginOnUser(authUser.getUsername(), token);
+            onlineUserService.checkLoginOnUser(authUser.getUsername(), token);
         }
         return ResponseEntity.ok(authInfo);
     }

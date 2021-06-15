@@ -37,11 +37,18 @@ public interface ExecRecordMapper {
     ExecRecord selectOne(Long id);
 
     /**
-     * id查询执行任务
+     * 查询所有执行任务
      *
      * @return 执行记录实体
      */
     List<ExecRecord> selectAll();
+
+    /**
+     * 根据owner查询所有执行任务
+     * @param owner
+     * @return 执行记录实体
+     */
+    List<ExecRecord> selectAllByOwner(@Param("owner") String owner);
 
     /**
      * 根据用例id获取所属的所有执行任务
@@ -109,5 +116,19 @@ public interface ExecRecordMapper {
                           @Param("owner") String owner,
                           @Param("expectStartTime") Date expectStartTime,
                           @Param("expectEndTime") Date expectEndTime);
+
+    /**
+     * 条件筛选测试用例
+     *
+     * @param title 标题
+     * @param owner 创建人
+     * @param expectStartTime 开始时间
+     * @param expectEndTime 结束时间
+     * @return 筛选后的列表
+     */
+    List<ExecRecord> searchByOne(@Param("title") String title,
+                            @Param("owner") String owner,
+                            @Param("expectStartTime") Date expectStartTime,
+                            @Param("expectEndTime") Date expectEndTime);
 }
 

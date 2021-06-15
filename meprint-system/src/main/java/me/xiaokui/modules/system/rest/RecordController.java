@@ -62,11 +62,13 @@ public class RecordController {
     @ApiOperation("查询所有执行任务")
     @PreAuthorize("@el.check('task:list')")
     @GetMapping(value = "/alllist")
-    public Response<?> getRecordAllList(@RequestParam(required = false)  String title,
+    public Response<?> getRecordAllList(@RequestParam  String userName,
+                                        @RequestParam(required = false)  String title,
                                         @RequestParam(required = false)  String owner,
                                         @RequestParam(required = false)  String expectStartTime,
-                                        @RequestParam(required = false)  String expectEndTime, Integer pageNum, Integer pageSize) {
-        RecordQueryReq req = new RecordQueryReq(title, owner, expectStartTime, expectEndTime, pageNum, pageSize);
+                                        @RequestParam(required = false)  String expectEndTime,
+                                        Integer pageNum, Integer pageSize) {
+        RecordQueryReq req = new RecordQueryReq(title, owner, expectStartTime, expectEndTime, pageNum, pageSize, userName);
         return Response.success(recordService.getList(req));
     }
 

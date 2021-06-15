@@ -257,6 +257,35 @@
     </if>
     order by id desc
   </select>
+    <select id="selectAllByOwner" resultType="me.xiaokui.modules.persistent.ExecRecord">
+      select
+      <include refid="Base_Column_List" />
+      from exec_record
+      where is_delete = 0
+      <if test="owner != null and owner != ''">
+        and owner = #{owner,jdbcType=VARCHAR}
+      </if>
+      order by id desc
+    </select>
+  <select id="searchByOne" resultType="me.xiaokui.modules.persistent.ExecRecord">
+    select
+    <include refid="Base_Column_List" />
+    from exec_record as r , sys_user as u
+    where r.is_delete = 0 and r.owner = u.nick_name
+    <if test="title != null and title != ''">
+      and title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="owner != null and owner != ''">
+      and owner = #{owner,jdbcType=VARCHAR}
+    </if>
+    <if test="expectStartTime != null">
+      and expect_start_time &gt;= #{expectStartTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="expectEndTime != null">
+      and expect_end_time &lt;= #{expectEndTime,jdbcType=TIMESTAMP}
+    </if>
+    order by id desc
+  </select>
 
   <update id="update" parameterType="me.xiaokui.modules.persistent.ExecRecord">
     update exec_record

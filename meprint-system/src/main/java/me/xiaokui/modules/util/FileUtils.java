@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Created by didi on 2019/9/29.
  */
-public class FileUtil {
+public class FileUtils {
     /**
      * 解压文件
      * @param zipPath 要解压的目标文件

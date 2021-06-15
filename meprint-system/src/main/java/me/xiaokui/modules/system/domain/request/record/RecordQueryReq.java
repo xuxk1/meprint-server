@@ -22,6 +22,8 @@ public class RecordQueryReq implements ParamValidate {
 
     private String owner;
 
+    private String userName;
+
     private String requirementId;
 
     private String expectStartTime;
@@ -54,13 +56,14 @@ public class RecordQueryReq implements ParamValidate {
         this.pageSize = pageSize;
     }
 
-    public RecordQueryReq(String title, String owner, String expectStartTime, String expectEndTime, Integer pageNum, Integer pageSize) {
+    public RecordQueryReq(String title, String owner, String expectStartTime, String expectEndTime, Integer pageNum, Integer pageSize, String userName) {
         this.title = title;
         this.owner = owner;
         this.expectStartTime = expectStartTime;
         this.expectEndTime = expectEndTime;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+        this.userName = userName;
     }
 
     @Override

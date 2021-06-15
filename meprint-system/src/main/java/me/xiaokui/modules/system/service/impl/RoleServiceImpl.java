@@ -176,7 +176,7 @@ public class RoleServiceImpl implements RoleService {
         }
         Set<Role> roles = roleRepository.findByUserId(user.getId());
         permissions = roles.stream().flatMap(role -> role.getMenus().stream())
-                .filter(menu -> me.xiaokui.utils.StringUtils.isNotBlank(menu.getPermission()))
+                .filter(menu -> StringUtils.isNotBlank(menu.getPermission()))
                 .map(Menu::getPermission).collect(Collectors.toSet());
         return permissions.stream().map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -217,9 +217,9 @@ public class RoleServiceImpl implements RoleService {
         if (CollectionUtil.isNotEmpty(users)) {
             users.forEach(item -> userCacheClean.cleanUserCache(item.getUsername()));
             Set<Long> userIds = users.stream().map(User::getId).collect(Collectors.toSet());
-            redisUtils.delByKeys(me.xiaokui.utils.CacheKey.DATE_USER, userIds);
-            redisUtils.delByKeys(me.xiaokui.utils.CacheKey.MENU_USER, userIds);
-            redisUtils.delByKeys(me.xiaokui.utils.CacheKey.ROLE_AUTH, userIds);
+            redisUtils.delByKeys(CacheKey.DATE_USER, userIds);
+            redisUtils.delByKeys(CacheKey.MENU_USER, userIds);
+            redisUtils.delByKeys(CacheKey.ROLE_AUTH, userIds);
         }
         redisUtils.del(CacheKey.ROLE_ID + id);
     }

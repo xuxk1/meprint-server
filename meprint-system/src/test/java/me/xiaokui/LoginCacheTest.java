@@ -1,7 +1,6 @@
 package me.xiaokui;
 
 import me.xiaokui.modules.security.service.UserDetailsServiceImpl;
-import me.xiaokui.modules.security.service.UserDetailsServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
