@@ -89,7 +89,6 @@ public class RecordServiceImpl implements RecordService {
         User user = null;
         Date beginTime;
         Date endTime;
-        String nick_name = null;
 
         if (req.getPageNum() !=null && req.getPageSize() !=null) {
             PageHelper.startPage(req.getPageNum(), req.getPageSize());
@@ -97,14 +96,13 @@ public class RecordServiceImpl implements RecordService {
 
         if (req.getUserName() !=null ) {
             user = userRepository.findByUsername(req.getUserName());
-            nick_name = user.getNickName();
             if (user.getIsAdmin().equals(true) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null) {
                 execRecordList = recordMapper.selectAll();
             }else if (user.getIsAdmin().equals(false) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null){
-                execRecordList = recordMapper.selectAllByOwner(nick_name);
+                execRecordList = recordMapper.selectAllByOwner(req.getUserName());
             }
         }
-        LOGGER.info("user.getIsAdmin()====" + user.getIsAdmin());
+
         if (user.getIsAdmin().equals(true) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))) {
             beginTime = transferTime(req.getExpectStartTime());
             endTime = transferTime(req.getExpectEndTime());
