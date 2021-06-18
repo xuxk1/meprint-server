@@ -173,6 +173,7 @@ public class RecordController {
      */
     @Log("获取任务详情")
     @ApiOperation("获取任务详情")
+    @PreAuthorize("@el.check('task:run')")
     @GetMapping(value = "/getRecordInfo")
     public Response<?> getRecordGeneralInfo(@RequestParam @NotNull(message = "任务id为空") Long id) {
         return Response.success(recordService.getGeneralInfo(id));
