@@ -18,6 +18,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static me.xiaokui.constants.SystemConstant.COMMA;
 
 /**
  * Created by didi on 2021/3/27.
@@ -68,13 +71,14 @@ public class RecordRoom extends Room {
                 ExecRecord recordUpdate = new ExecRecord();
                 recordUpdate.setId(Long.valueOf(recordId));
 
-                String[] list = executors.split(me.xiaokui.constants.SystemConstant.COMMA);
-                if (list.length == 0) {
-                    executors = p.getClient().getClientName();
+                String[] list = executors.split(SystemConstant.COMMA);
+                List<String> names = Arrays.stream(list).filter(e->!StringUtils.isEmpty(e)).collect(Collectors.toList());
+                if (names.size() >= 1 && !Arrays.asList(list).contains(p.getClient().getClientName())) {
+                    names.add(p.getClient().getClientName());
+                    executors = String.join(",", names);
+//                    executors = new String(executors + p.getClient().getClientName() + SystemConstant.COMMA);
                 } else {
-                    if (!Arrays.asList(list).contains(p.getClient().getClientName())) {
-                        executors = new String(executors + SystemConstant.COMMA + p.getClient().getClientName());
-                    }
+                    executors = p.getClient().getClientName();
                 }
 
                 recordUpdate.setExecutors(executors);
