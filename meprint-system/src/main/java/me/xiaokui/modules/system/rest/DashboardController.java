@@ -3,12 +3,14 @@ package me.xiaokui.modules.system.rest;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.annotation.ResponseJSONP;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import me.xiaokui.modules.quartz.utils.JiraUtil;
 import me.xiaokui.modules.system.service.dto.JiraDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,10 +39,10 @@ public class DashboardController {
      * @param
      * @return
      */
+    @ApiOperation("获取jira中的数据")
     @GetMapping("/dashboard")
     @ResponseJSONP
     public JSONObject getConfigVariable(){
-        log.info("dashboard=============");
         String projectUrl = jiraEntity.getJIRA_URL() + jiraEntity.getPROJECT_URI();
         String filterUrl = jiraEntity.getALL_PROJECT_URI();
         String bugAll = jiraEntity.getJIRA_URL() + jiraEntity.getBUG_ALL_URI();

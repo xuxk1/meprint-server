@@ -273,10 +273,7 @@ public class CaseServiceImpl implements CaseService {
             } else {
                 // 没重合往后面塞一个
                 names.add(req.getModifier());
-                if (names.size() > 1) {
-                    executors = String.join(",", names);
-                }
-                executors = String.join("", names);
+                executors = String.join(",", names);
             }
 
             JSONObject jsonObject = TreeUtil.parse(req.getCaseContent());

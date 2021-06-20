@@ -4,6 +4,7 @@ import com.alibaba.fastjson.support.spring.annotation.ResponseJSONP;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import me.xiaokui.annotation.Log;
 import me.xiaokui.annotation.rest.AnonymousGetMapping;
 import me.xiaokui.exception.BadRequestException;
 import me.xiaokui.modules.mapper.BizMapper;
@@ -161,6 +162,8 @@ public class CaseController {
      * @param caseId 用例id
      * @return 响应体
      */
+    @Log("查看用例详情")
+    @ApiOperation("查看用例详情")
     @GetMapping(value = "/detail")
     public ResponseEntity<Object> getCaseDetail(@RequestParam @NotNull(message = "用例id为空") Long caseId) {
         try {
@@ -182,6 +185,8 @@ public class CaseController {
      * @param productLineId 业务线id
      * @return 响应体
      */
+    @Log("筛选时获取所有创建人的列表")
+    @ApiOperation("筛选时获取所有创建人的列表")
     @GetMapping(value = "/listCreators")
     public ResponseEntity<Object> listCreators(@RequestParam @NotNull(message = "用例类型为空") Integer caseType,
                                                @RequestParam @NotNull(message = "业务线为空") Long productLineId) {
@@ -206,6 +211,8 @@ public class CaseController {
      * @param resource 资源列表
      * @return 响应体
      */
+    @Log("修改圈选用例时统计的用例条目数据")
+    @ApiOperation("修改圈选用例时统计的用例条目数据")
     @GetMapping(value = "/countByCondition")
     public Response<?> getCountByCondition(@RequestParam Long caseId, String[] priority, String[] resource) {
         CaseConditionReq req = new CaseConditionReq(caseId, priority, resource);
@@ -219,6 +226,8 @@ public class CaseController {
      * @param id 用例id
      * @return 概览信息
      */
+    @Log("获取上方用例概览信息")
+    @ApiOperation("获取上方用例概览信息")
     @GetMapping(value = "/getCaseInfo")
     public Response<?> getCaseGeneralInfo(@RequestParam @NotNull(message = "用例id为空") Long id) {
 //        return new ResponseEntity<>(caseService.getCaseGeneralInfo(id), HttpStatus.OK);
@@ -231,6 +240,9 @@ public class CaseController {
      * @param req 请求体
      * @return 响应体
      */
+    @Log("用例更新")
+    @ApiOperation("用例更新")
+    @PreAuthorize("@el.check('case:update')")
     @PostMapping(value = "/update")
     public Response<?> updateWsCase(@RequestBody WsSaveReq req) {
         try {
