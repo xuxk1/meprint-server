@@ -102,7 +102,7 @@ public class JiraUtil {
 
     @SneakyThrows
     public static JSONObject getAllProjectName(String project_url){
-        System.out.println("url======" + project_url);
+        logger.info("url======" + project_url);
         String response = sendGetRequest(project_url);
         JSONArray jsonArray = new JSONArray(response);
         int len = jsonArray.length();
@@ -111,8 +111,8 @@ public class JiraUtil {
         for (int i = 0;i < len;i++) {
             res.add((String) jsonArray.getJSONObject(i).get("name"));
         }
-        System.out.println("res=======" + res);
-        System.out.println("res=======" + res2);
+        logger.info("res=======" + res);
+        logger.info("res=======" + res2);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("projectCount",len);
         jsonObject.put("projectName",res);
@@ -121,9 +121,9 @@ public class JiraUtil {
 
     public static JSONObject getIssueCount(String bug_url){
 
-        System.out.println("bug_url======" + bug_url);
+        logger.info("bug_url======" + bug_url);
         String response = sendGetRequest(bug_url);
-        System.out.println("response======" + response);
+        logger.info("response======" + response);
         JSONObject object= JSONObject.parseObject(response);
         String filterTitle = (String) object.get("filterTitle");
         String filterUrl = (String) object.get("filterUrl");
@@ -137,7 +137,7 @@ public class JiraUtil {
             res2.add(jsonArray.getJSONObject(i).get("value"));
             res3.add(jsonArray.getJSONObject(i).get("url"));
         }
-        System.out.println("key======" + res + "\n" + res2 + "\n" + res3);
+        logger.info("key======" + res + "\n" + res2 + "\n" + res3);
         int issueCount = (int) object.get("issueCount");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("filterTitle",filterTitle);
@@ -146,40 +146,28 @@ public class JiraUtil {
         jsonObject.put("userNames",res);
         jsonObject.put("taskCount",res2);
         jsonObject.put("taskAddress",res3);
-        System.out.println("jsonObject======" + jsonObject);
+        logger.info("jsonObject======" + jsonObject);
         return jsonObject;
 
     }
 
     public static void main(String[] args){
         String url = JIRA_URL + PROJECT_URI;
-        String url2 = JIRA_URL + BUG_URI;
-        String url3 = JIRA_URL + REPAIRED_URI;
-        String url4 = JIRA_URL + COMPLETED_URI;
-        String url5 = JIRA_URL + ONLINE_URI;
-        String url6 = JIRA_URL + UPCOMING_URI;
-        String url7 = JIRA_URL + DEV_URI;
+        String url_bug = JIRA_URL + BUG_URI;
+        String urlRepaired = JIRA_URL + REPAIRED_URI;
+        String urlCompleted = JIRA_URL + COMPLETED_URI;
+        String urlOnline = JIRA_URL + ONLINE_URI;
+        String url_uncoming = JIRA_URL + UPCOMING_URI;
+        String urlDev = JIRA_URL + DEV_URI;
         JSONObject getProjectName = getAllProjectName(url);
-        JSONObject issueCount2 = getIssueCount(url2);
+        JSONObject issueCount2 = getIssueCount(url_bug);
 //        JSONObject issueCount3 = getIssueCount(url3);
 //        JSONObject issueCount4 = getIssueCount(url4);
-        JSONObject issueCount5 = getIssueCount(url5);
+        JSONObject issueCount5 = getIssueCount(urlOnline);
 //        JSONObject issueCount6 = getIssueCount(url6);
-        JSONObject issueCount7 = getIssueCount(url7);
-//        JSONObject issueCount2 = getRepairedCount(url3);
-//        JSONObject issueCount3 = getCompletedCount(url4);
-//        System.out.println("getProjectName" + getProjectName);
-//        System.out.println(issueCount2.get("issueCount"));
-//        System.out.println(issueCount2.get("result"));
-//        System.out.println(issueCount3.get("issueCount"));
-//        System.out.println(issueCount4.get("issueCount"));
-//        System.out.println(issueCount4.get("filterTitle"));
-//        System.out.println(issueCount5.get("issueCount"));
-//        System.out.println(issueCount5.get("filterTitle"));
-//        System.out.println(issueCount6.get("issueCount"));
-//        System.out.println(issueCount6.get("filterTitle"));
-        System.out.println(issueCount7.get("issueCount"));
-        System.out.println(issueCount7.get("filterTitle"));
+        JSONObject issueCountDev = getIssueCount(urlDev);
+        logger.info(String.valueOf(issueCountDev.get("issueCount")));
+        logger.info(String.valueOf(issueCountDev.get("filterTitle")));
     }
 }
 
