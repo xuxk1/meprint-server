@@ -1,0 +1,12 @@
+FROM registry.cn-hangzhou.aliyuncs.com/muri/muri-java8:1.0
+
+MAINTAINER "xuxiaokui@meprint.com"
+ENV LANG="en_US.UTF-8"
+WORKDIR /data/app
+COPY meprint-system/target/meprint-system-2.6.jar /data/app/qa_test_platform.jar
+# ENTRYPOINT ["/entrypoint"]
+EXPOSE 8089
+
+# COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
+
+ENTRYPOINT ["nohup", "java","-jar","/data/app/qa_test_platform.jar","--spring.profiles.active=test"]
