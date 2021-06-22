@@ -22,3 +22,4 @@ else
   kubectl -n $APP_NS set image deployment/$APP_NAME $APP_NAME=$APP_IMAGE
 fi
 echo "启动完成！！！"
+sleep 60
