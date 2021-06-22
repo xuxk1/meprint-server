@@ -2,7 +2,7 @@
 
 # 变量参数化
 APP_NS="test"
-APP_NAME="qa_test_platform"
+APP_NAME="qatestplatform"
 APP_IMAGE="registry-vpc.cn-hangzhou.aliyuncs.com/muri/$APP_NAME:`date +%Y%m%d%H%M%S`"
 
 
