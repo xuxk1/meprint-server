@@ -2,17 +2,20 @@ package me.xiaokui.modules.util.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import me.xiaokui.modules.util.enums.StatusCode;
+import lombok.extern.slf4j.Slf4j;
 import me.xiaokui.modules.util.enums.StatusCode;
 import me.xiaokui.modules.system.domain.response.controller.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常捕捉器
@@ -20,8 +23,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author didi
  * @date 2020/11/20
  */
-@ControllerAdvice
-@ResponseBody
+@Slf4j
+@RestControllerAdvice(basePackageClasses = {me.xiaokui.modules.system.rest.CaseController.class,
+        me.xiaokui.modules.system.rest.RecordController.class,
+        me.xiaokui.modules.system.rest.BackupController.class,
+        me.xiaokui.modules.system.rest.CaseController.class,
+        me.xiaokui.modules.system.rest.UploadController.class,
+        me.xiaokui.modules.system.rest.WebController.class,
+        me.xiaokui.modules.system.rest.DirController.class})
+@Order(Ordered.HIGHEST_PRECEDENCE)
+//@ControllerAdvice
+//@ResponseBody
 public class ExpHandler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ExpHandler.class);

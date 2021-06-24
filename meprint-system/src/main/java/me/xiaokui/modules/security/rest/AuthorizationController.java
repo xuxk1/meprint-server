@@ -83,7 +83,7 @@ public class AuthorizationController {
         // 清除验证码
         redisUtils.del(authUser.getUuid());
         if (StringUtils.isBlank(code)) {
-            throw new me.xiaokui.exception.BadRequestException("验证码不存在或已过期");
+            throw new BadRequestException("验证码不存在或已过期");
         }
         if (StringUtils.isBlank(authUser.getCode()) || !authUser.getCode().equalsIgnoreCase(code)) {
             throw new BadRequestException("验证码错误");
