@@ -50,10 +50,11 @@ public class RecordQueryReq implements ParamValidate {
         this.pageSize = pageSize;
     }
 
-    public RecordQueryReq(Long caseId, Integer pageNum, Integer pageSize) {
+    public RecordQueryReq(Long caseId, Integer pageNum, Integer pageSize, String userName) {
         this.caseId = caseId;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+        this.userName = userName;
     }
 
     public RecordQueryReq(String title, String owner, String expectStartTime, String expectEndTime, Integer pageNum, Integer pageSize, String userName) {

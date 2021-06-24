@@ -130,5 +130,16 @@ public interface ExecRecordMapper {
                             @Param("owner") String owner,
                             @Param("expectStartTime") Date expectStartTime,
                             @Param("expectEndTime") Date expectEndTime);
+
+
+    /**
+     * 条件筛选测试用例
+     *
+     * @param caseId 标题
+     * @param owner 用户名
+     * @return 筛选后的列表
+     */
+    List<ExecRecord> getRecordListByCaseIdAndUserName(@Param("caseId") Long caseId,
+                                                      @Param("owner") String owner);
 }
 

@@ -70,12 +70,19 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public PageModule<RecordListResp> getListByCaseId(RecordQueryReq req) {
         List<RecordListResp> res = new ArrayList<>();
+        List<ExecRecord> execRecordList = null;
+        User user = userRepository.findByUsername(req.getUserName());
         TestCase testCase = caseMapper.selectOne(req.getCaseId());
         if (testCase == null) {
             throw new CaseServerException("用例不存在", StatusCode.NOT_FOUND_ENTITY);
         }
         PageHelper.startPage(req.getPageNum(), req.getPageSize());
-        List<ExecRecord> execRecordList = recordMapper.getRecordListByCaseId(req.getCaseId());
+        if (user.getIsAdmin().equals(true)) {
+            execRecordList = recordMapper.getRecordListByCaseId(req.getCaseId());
+        } else {
+            execRecordList = recordMapper.getRecordListByCaseIdAndUserName(req.getCaseId(),req.getUserName());
+        }
+
         for (ExecRecord record : execRecordList) {
             res.add(buildList(record));
         }

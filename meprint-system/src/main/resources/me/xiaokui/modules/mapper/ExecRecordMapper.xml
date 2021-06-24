@@ -286,6 +286,15 @@
     </if>
     order by id desc
   </select>
+  <select id="getRecordListByCaseIdAndUserName" resultType="me.xiaokui.modules.persistent.ExecRecord">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exec_record
+    where is_delete = 0 and case_id = #{caseId,jdbcType=BIGINT} and owner = #{owner,jdbcType=VARCHAR}
+    order by id desc
+  </select>
 
   <update id="update" parameterType="me.xiaokui.modules.persistent.ExecRecord">
     update exec_record

@@ -49,8 +49,8 @@ public class RecordController {
     @ApiOperation("查询执行任务:根据ID获取所有执行任务")
     @GetMapping(value = "/list")
     @PreAuthorize("@el.check('user:list','task:list')")
-    public Response<?> getRecordList(@RequestParam @NotNull(message = "用例id为空") Long caseId, Integer pageNum, Integer pageSize) {
-        RecordQueryReq req = new RecordQueryReq(caseId, pageNum, pageSize);
+    public Response<?> getRecordList(@RequestParam @NotNull(message = "用例id为空") Long caseId, Integer pageNum, Integer pageSize, String userName) {
+        RecordQueryReq req = new RecordQueryReq(caseId, pageNum, pageSize, userName);
         return Response.success(recordService.getListByCaseId(req));
     }
 
