@@ -27,5 +27,6 @@ public class JiraDto {
     private String ONLINE_URI;
     private String UPCOMING_URI;
     private String DEV_URI;
+    private String ISSUETABLE_URI;
 
 }
