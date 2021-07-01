@@ -10,10 +10,9 @@ import me.xiaokui.modules.system.service.dto.JiraDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 
 /**
@@ -31,7 +30,7 @@ public class DashboardController {
 
     @Autowired
     private JiraDto jiraEntity;
-    private Logger log = LoggerFactory.getLogger(DashboardController.class);
+    private Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     /**
      * 获取jira中的数据
@@ -61,9 +60,9 @@ public class DashboardController {
         JSONObject jsonObje = JiraUtil.getIssueCount(onlineUrl);
 //        JSONObject jsonOb = JiraUtil.getIssueCount(upcomingUrl);
         JSONObject jsonO = JiraUtil.getIssueCount(devUrl);
-        log.info("获取jira接口中数据---获取当前项目数量" + projectName);
-        log.info("获取jira接口中数据---设计师版待修复bug数量" + jsonObjct.get("issueCount") + "\n" + jsonObjct.get("filterTitle"));
-        log.info("获取jira接口中数据---设计师版已修复bug数量" + jsonOcom.get("issueCount") + "\n" + jsonOcom.get("filterTitle"));
+        logger.info("获取jira接口中数据---获取当前项目数量" + projectName);
+        logger.info("获取jira接口中数据---设计师版待修复bug数量" + jsonObjct.get("issueCount") + "\n" + jsonObjct.get("filterTitle"));
+        logger.info("获取jira接口中数据---设计师版已修复bug数量" + jsonOcom.get("issueCount") + "\n" + jsonOcom.get("filterTitle"));
 //        log.info("获取jira接口中数据---线上bug数量" + jsonObje.get("issueCount") + "\n" + jsonObje.get("filterTitle"));
 //        log.info("获取jira接口中数据---个人待办任务数量" + jsonOb.get("issueCount") + "\n" + jsonOb.get("filterTitle"));
 //        log.info("获取jira接口中数据---开发任务" + jsonO.get("issueCount") + "\n" + jsonO.get("filterTitle"));
@@ -78,5 +77,21 @@ public class DashboardController {
         return jsonObt;
     }
 
+    /**
+     * 根据筛选条件获取jira中的数据
+     *
+     * @param
+     * @return
+     */
+    @ApiOperation("根据筛选条件获取jira中的数据")
+    @PostMapping("/issueTable")
+    @ResponseJSONP
+    public String getConditionResult(@RequestParam() HashMap<String, String> jql) throws Exception {
+        logger.info("访问issueTable接口=======" + jql);
+        String issueTableUrl = jiraEntity.getJIRA_URL() + jiraEntity.getISSUETABLE_URI();
+        String issueTableData = JiraUtil.sendPostRequest(issueTableUrl,jql);
+        logger.info("issueTableData=====" + issueTableData);
+        return issueTableData;
+    }
 }
 

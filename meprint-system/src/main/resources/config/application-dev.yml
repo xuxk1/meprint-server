@@ -124,3 +124,4 @@ jira:
   online_uri: /rest/gadget/1.0/statistics?jql=project%3D10100&statType=assignees
   upcoming_uri: /rest/gadget/1.0/statistics?filterId=10602&statType=assignees
   dev_uri: /rest/gadget/1.0/statistics?filterId=10601&statType=customfield_10600
+  issueTable_uri: /rest/issueNav/1/issueTable

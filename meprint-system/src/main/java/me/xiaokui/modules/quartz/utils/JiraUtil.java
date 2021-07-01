@@ -4,21 +4,32 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
 import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.util.*;
+
+import static com.alipay.api.AlipayConstants.CHARSET_UTF8;
 
 /**
  * @ClassName: JiraUtil
@@ -37,10 +48,11 @@ public class JiraUtil {
     private static String ONLINE_URI = "/rest/gadget/1.0/statistics?jql=project%3D10100&statType=assignees";
     private static String UPCOMING_URI = "/rest/gadget/1.0/statistics?filterId=10602&statType=assignees";
     private static String DEV_URI = "/rest/gadget/1.0/statistics?filterId=10601&statType=customfield_10600";
-    private static String Cookies = "JSESSIONID=046F54BAAE7658123CEA4BF50677A52D; seraph.rememberme.cookie=11900%3A57d03abc16e518d20ce8559ea105aed8e084abd8; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_ab0881a790e6e8b876201a740463c9f7a202662a_lin";
+    private static String ISSUETABLE_URI = "/rest/issueNav/1/issueTable";
+    private static String Cookies = "seraph.rememberme.cookie=11908%3Ad29bef29ddf206544bd04fda34ce9d72e6590e8b; experimentation_subject_id=IjZhMjUzMzMyLTUwYTUtNGIwNi04ZmNmLTNlYzAzMmMwMzVkNSI%3D--a3f8ac0f69e5bdcbf446cfea1729728a1d4b2a66; JSESSIONID=48A0F2BBFCAED3EC69A7D96CC683D5E1; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_45542c1d46ca2997169ea8d54947df6909fce1c1_lin";
     private static String DEFAULT_ENCODING = "UTF-8";
     private static String DEFUALT_CONTENT_TYPE = "application/json";
-    private static String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36";
+    private static String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36";
     private static int DEFAULT_SOCKET_TIMEOUT = 10000;
 
     private static Logger logger = LoggerFactory.getLogger(JiraUtil.class);
@@ -54,7 +66,7 @@ public class JiraUtil {
         try(CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
             httpGet.setHeader(HTTP.USER_AGENT,USER_AGENT);
-            httpGet.setHeader(HTTP.CONTENT_ENCODING,DEFUALT_CONTENT_TYPE);
+            httpGet.setHeader(HTTP.CONTENT_TYPE,DEFUALT_CONTENT_TYPE);
             httpGet.setHeader(HTTP.CONTENT_ENCODING,DEFAULT_ENCODING);
             httpGet.setHeader("Cookie",Cookies);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(DEFAULT_SOCKET_TIMEOUT)
@@ -84,6 +96,46 @@ public class JiraUtil {
         return responseContent;
     }
 
+    public static String sendPostRequest(String url, HashMap<String, String> map) throws Exception {
+        String result = "";
+        CloseableHttpClient client = null;
+        CloseableHttpResponse response = null;
+        RequestConfig defaultRequestConfig = RequestConfig.custom().setSocketTimeout(550000).setConnectTimeout(550000)
+                .setConnectionRequestTimeout(550000).setStaleConnectionCheckEnabled(true).build();
+        client = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
+        URIBuilder uriBuilder = new URIBuilder(url);
+
+        HttpPost httpPost = new HttpPost(uriBuilder.build());
+        httpPost.setHeader("X-Atlassian-Token", "no-check");
+        httpPost.setHeader("Host", "jira.diy8.com");
+        httpPost.setHeader("Cookie", Cookies);
+        Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry = it.next();
+            NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry.getValue());
+            params.add(pair);
+        }
+
+        httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        try {
+            response = client.execute(httpPost);
+            if (response != null) {
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity, CHARSET_UTF8);
+                }
+            }
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException("创建连接失败" + e);
+        } catch (IOException e) {
+            throw new RuntimeException("创建连接失败" + e);
+        }
+
+        return result;
+    }
+
     private static void close(HttpEntity entity){
         if(entity==null){
             return;
@@ -111,8 +163,6 @@ public class JiraUtil {
         for (int i = 0;i < len;i++) {
             res.add((String) jsonArray.getJSONObject(i).get("name"));
         }
-        logger.info("res=======" + res);
-        logger.info("res=======" + res2);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("projectCount",len);
         jsonObject.put("projectName",res);
@@ -123,7 +173,6 @@ public class JiraUtil {
 
         logger.info("bug_url======" + bug_url);
         String response = sendGetRequest(bug_url);
-        logger.info("response======" + response);
         JSONObject object= JSONObject.parseObject(response);
         String filterTitle = (String) object.get("filterTitle");
         String filterUrl = (String) object.get("filterUrl");
@@ -137,7 +186,6 @@ public class JiraUtil {
             res2.add(jsonArray.getJSONObject(i).get("value"));
             res3.add(jsonArray.getJSONObject(i).get("url"));
         }
-        logger.info("key======" + res + "\n" + res2 + "\n" + res3);
         int issueCount = (int) object.get("issueCount");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("filterTitle",filterTitle);
@@ -146,12 +194,11 @@ public class JiraUtil {
         jsonObject.put("userNames",res);
         jsonObject.put("taskCount",res2);
         jsonObject.put("taskAddress",res3);
-        logger.info("jsonObject======" + jsonObject);
         return jsonObject;
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         String url = JIRA_URL + PROJECT_URI;
         String url_bug = JIRA_URL + BUG_URI;
         String urlRepaired = JIRA_URL + REPAIRED_URI;
@@ -159,15 +206,32 @@ public class JiraUtil {
         String urlOnline = JIRA_URL + ONLINE_URI;
         String url_uncoming = JIRA_URL + UPCOMING_URI;
         String urlDev = JIRA_URL + DEV_URI;
-        JSONObject getProjectName = getAllProjectName(url);
-        JSONObject issueCount2 = getIssueCount(url_bug);
-//        JSONObject issueCount3 = getIssueCount(url3);
-//        JSONObject issueCount4 = getIssueCount(url4);
-        JSONObject issueCount5 = getIssueCount(urlOnline);
-//        JSONObject issueCount6 = getIssueCount(url6);
-        JSONObject issueCountDev = getIssueCount(urlDev);
-        logger.info(String.valueOf(issueCountDev.get("issueCount")));
-        logger.info(String.valueOf(issueCountDev.get("filterTitle")));
+        String issueTable = JIRA_URL + ISSUETABLE_URI;
+        String params = "{\"startIndex\": 0,\"jql\": \"created >= 2021-06-01 AND created <= 2021-06-30 ORDER BY created DESC\",\"layoutKey\": \"list-view\"}";
+        logger.info("params======" + params);
+
+        HttpClient client = new HttpClient();
+        client.getHttpConnectionManager().getParams().setConnectionTimeout(3000);
+        client.getHttpConnectionManager().getParams().setSoTimeout(3000);
+
+        logger.info("URL========" + issueTable);
+        PostMethod post = new PostMethod(issueTable);
+        String result = "";
+        post.addRequestHeader("X-Atlassian-Token","no-check");
+        post.addRequestHeader("Host","jira.diy8.com");
+        post.addRequestHeader("Cookie",Cookies);
+        post.addParameter("startIndex", String.valueOf(0));
+        post.addParameter("jql","created >= 2021-06-01 AND created <= 2021-06-30 ORDER BY created DESC");
+        post.addParameter("layoutKey","list-view");
+        client.executeMethod(post);
+        InputStream inputStream = post.getResponseBodyAsStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuffer stringBuffer = new StringBuffer();
+        String str= "";
+        while((str = br.readLine()) != null){
+            stringBuffer.append(str);
+        }
+        logger.info(String.valueOf(stringBuffer));
     }
 }
 
