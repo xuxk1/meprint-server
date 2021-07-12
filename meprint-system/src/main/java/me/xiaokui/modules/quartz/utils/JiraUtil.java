@@ -49,7 +49,7 @@ public class JiraUtil {
     private static String UPCOMING_URI = "/rest/gadget/1.0/statistics?filterId=10602&statType=assignees";
     private static String DEV_URI = "/rest/gadget/1.0/statistics?filterId=10601&statType=customfield_10600";
     private static String ISSUETABLE_URI = "/rest/issueNav/1/issueTable";
-    private static String Cookies = "seraph.rememberme.cookie=11908%3Ad29bef29ddf206544bd04fda34ce9d72e6590e8b; experimentation_subject_id=IjZhMjUzMzMyLTUwYTUtNGIwNi04ZmNmLTNlYzAzMmMwMzVkNSI%3D--a3f8ac0f69e5bdcbf446cfea1729728a1d4b2a66; JSESSIONID=48A0F2BBFCAED3EC69A7D96CC683D5E1; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_45542c1d46ca2997169ea8d54947df6909fce1c1_lin";
+    private static String Cookies = "JSESSIONID=59B9E33D33C27DEB00075F48558B681F; seraph.rememberme.cookie=11926%3A57ab631b1842a17f51e19931e468445aa82c0cda; atlassian.xsrf.token=BMXM-6QDP-0P5F-LZ0B_ba0e5a13a76a42738a2080f0b5a680cb62d69408_lin; UM_distinctid=17a9843afb9ed4-0f31acfb68959d-34657300-1aeaa0-17a9843afba100";
     private static String DEFAULT_ENCODING = "UTF-8";
     private static String DEFUALT_CONTENT_TYPE = "application/json";
     private static String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36";

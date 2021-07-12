@@ -58,21 +58,15 @@ public class DashboardController {
         JSONObject jsonObj = JiraUtil.getIssueCount(bugAll);
         JSONObject jsonOcom = JiraUtil.getIssueCount(completedUrl);
         JSONObject jsonObje = JiraUtil.getIssueCount(onlineUrl);
-//        JSONObject jsonOb = JiraUtil.getIssueCount(upcomingUrl);
         JSONObject jsonO = JiraUtil.getIssueCount(devUrl);
         logger.info("获取jira接口中数据---获取当前项目数量" + projectName);
         logger.info("获取jira接口中数据---设计师版待修复bug数量" + jsonObjct.get("issueCount") + "\n" + jsonObjct.get("filterTitle"));
         logger.info("获取jira接口中数据---设计师版已修复bug数量" + jsonOcom.get("issueCount") + "\n" + jsonOcom.get("filterTitle"));
-//        log.info("获取jira接口中数据---线上bug数量" + jsonObje.get("issueCount") + "\n" + jsonObje.get("filterTitle"));
-//        log.info("获取jira接口中数据---个人待办任务数量" + jsonOb.get("issueCount") + "\n" + jsonOb.get("filterTitle"));
-//        log.info("获取jira接口中数据---开发任务" + jsonO.get("issueCount") + "\n" + jsonO.get("filterTitle"));
         jsonObt.put("project",projectName);
         jsonObt.put("repaired",jsonObjct);
         jsonObt.put("personal",jsonObj);
         jsonObt.put("completed",jsonOcom);
         jsonObt.put("online",jsonObje);
-//        jsonObt.put("online",jsonObje);
-//        jsonObt.put("upcoming",jsonOb);
         jsonObt.put("product",jsonO);
         return jsonObt;
     }
