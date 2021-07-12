@@ -2,16 +2,21 @@ package me.xiaokui.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockMultipartFile;
 
 import static org.junit.Assert.*;
 
 public class FileUtilTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtilTest.class);
+
     @Test
     public void testToFile() {
         long retval = FileUtil.toFile(new MockMultipartFile("foo", (byte[]) null)).getTotalSpace();
-        assertEquals(500695072768L, retval);
+        LOGGER.info("retval======" + retval);
+        assertEquals(499963174912L, retval);
     }
 
     @Test

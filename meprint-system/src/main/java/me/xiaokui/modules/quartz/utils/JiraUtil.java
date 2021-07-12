@@ -209,6 +209,8 @@ public class JiraUtil {
         String issueTable = JIRA_URL + ISSUETABLE_URI;
         String params = "{\"startIndex\": 0,\"jql\": \"created >= 2021-06-01 AND created <= 2021-06-30 ORDER BY created DESC\",\"layoutKey\": \"list-view\"}";
         logger.info("params======" + params);
+        JSONObject projectName = getAllProjectName(url);
+        logger.info("project====" + projectName);
 
         HttpClient client = new HttpClient();
         client.getHttpConnectionManager().getParams().setConnectionTimeout(3000);
