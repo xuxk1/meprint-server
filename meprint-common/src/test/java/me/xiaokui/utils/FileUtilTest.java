@@ -16,7 +16,7 @@ public class FileUtilTest {
     public void testToFile() {
         long retval = FileUtil.toFile(new MockMultipartFile("foo", (byte[]) null)).getTotalSpace();
         LOGGER.info("retval======" + retval);
-        assertEquals(499963174912L, retval);
+        assertEquals(98522210304L, retval);
     }
 
     @Test
