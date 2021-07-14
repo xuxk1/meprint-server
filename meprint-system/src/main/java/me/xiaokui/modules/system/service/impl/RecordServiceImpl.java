@@ -103,22 +103,23 @@ public class RecordServiceImpl implements RecordService {
 
         if (req.getUserName() !=null ) {
             user = userRepository.findByUsername(req.getUserName());
-            if (user.getIsAdmin().equals(true) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null) {
+            if (req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null) {
                 execRecordList = recordMapper.selectAll();
             }else if (user.getIsAdmin().equals(false) && req.getTitle() ==null && req.getOwner() ==null && req.getExpectStartTime() ==null && req.getExpectEndTime() ==null){
                 execRecordList = recordMapper.selectAllByOwner(req.getUserName());
             }
         }
 
-        if (user.getIsAdmin().equals(true) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))) {
+        if (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null)) {
             beginTime = transferTime(req.getExpectStartTime());
             endTime = transferTime(req.getExpectEndTime());
             execRecordList = recordMapper.search(req.getTitle(), req.getOwner(), beginTime, endTime);
-        }else if (user.getIsAdmin().equals(false) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))){
-            beginTime = transferTime(req.getExpectStartTime());
-            endTime = transferTime(req.getExpectEndTime());
-            execRecordList = recordMapper.searchByOne(req.getTitle(), req.getOwner(), beginTime, endTime);
         }
+//        else if (user.getIsAdmin().equals(false) && (req.getTitle() !=null || req.getOwner() !=null || (req.getExpectStartTime() !=null && req.getExpectEndTime() !=null))){
+//            beginTime = transferTime(req.getExpectStartTime());
+//            endTime = transferTime(req.getExpectEndTime());
+//            execRecordList = recordMapper.searchByOne(req.getTitle(), req.getOwner(), beginTime, endTime);
+//        }
 
         for (ExecRecord record : execRecordList) {
             res.add(buildList(record));
